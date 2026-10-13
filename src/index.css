@@ -62,13 +62,21 @@ section[id] {
   scroll-margin-top: 96px;
 }
 
-@media (max-width: 1279.98px) {
-  section[id] {
-    scroll-margin-top: 64px;
+@media (min-width: 768px) {
+  .hero-section {
+    padding-top: calc(88px + clamp(20px, 4vh, 48px));
   }
 
-  html {
-    scroll-padding-top: 0;
+  .hero-medallion {
+    width: clamp(96px, min(12vw, 21vh), 230px) !important;
+    height: clamp(96px, min(12vw, 21vh), 230px) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-section,
+  .hero-lockup {
+    gap: clamp(10px, 2vh, 24px);
   }
 }
 

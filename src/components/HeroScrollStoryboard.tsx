@@ -5,6 +5,8 @@ import { ChromeMedallion } from './ChromeMedallion';
 import { ThreeCanvas } from './ThreeCanvas';
 import { soundFx } from '../utils/audio';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
+import { useImageViewer } from './ImageViewer';
+import logoSrc from '../assets/images/logo-hero-500.webp';
 
 interface HeroScrollStoryboardProps {
   onOpenApply: () => void;
@@ -18,6 +20,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
   onOpenContact,
   onLogoClick,
 }) => {
+  const { openImage } = useImageViewer();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -69,6 +72,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
       setShockwave(false);
       setLogoPulse(false);
     }, 850);
+    openImage({ src: logoSrc, alt: 'Creator Hub Medallion', width: 500, height: 500 });
     if (onLogoClick) onLogoClick();
   };
 
@@ -104,10 +108,11 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
 
   return (
     <section
+      id="hero"
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-[100svh] min-h-[100svh] w-full bg-ink text-paper flex flex-col items-center justify-center gap-[clamp(16px,3.2vh,48px)] px-4 sm:px-8 lg:px-14 pt-[104px] pb-2 overflow-hidden perspective-1000"
+      className="hero-section relative h-[100svh] min-h-[100svh] w-full bg-ink text-paper flex flex-col items-center justify-center gap-[clamp(16px,3.2vh,48px)] px-4 sm:px-8 lg:px-14 pt-[104px] pb-2 overflow-hidden perspective-1000"
     >
       {/* 1. Three.js Background Canvas with Interactive Mouse Particle Parallax */}
       <ThreeCanvas />
@@ -132,7 +137,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
           y: headlineScrollY,
           filter: headlineScrollFilter,
         }}
-        className="relative w-full mx-auto flex flex-col items-center gap-[clamp(16px,3.2vh,48px)] z-10"
+        className="hero-lockup relative w-full mx-auto flex flex-col items-center gap-[clamp(16px,3.2vh,48px)] z-10"
       >
         {/* Single H1 for SEO and screen readers, content in DOM from first render */}
         <h1 className="relative flex w-full md:w-max max-w-[92vw] flex-col items-center justify-center gap-2 md:flex-row md:gap-[clamp(16px,2.4vw,48px)] mx-auto">
@@ -285,7 +290,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                     />
                   )}
 
-                  <ChromeMedallion size="clamp(90px, 12vw, 230px)" className="transition-transform duration-300" />
+                  <ChromeMedallion size="clamp(90px, 12vw, 230px)" className="hero-medallion transition-transform duration-300" />
                 </button>
               </motion.div>
             </motion.div>

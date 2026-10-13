@@ -42,18 +42,32 @@ export const Navbar: React.FC<NavbarProps> = ({
       }))
       .filter((section): section is { href: string; element: HTMLElement } => Boolean(section.element));
 
+    const updateActiveSection = () => {
+      const hero = document.getElementById('hero');
+      const heroBounds = hero?.getBoundingClientRect();
+      const isHeroVisible = Boolean(
+        heroBounds && heroBounds.bottom > 0 && heroBounds.top < window.innerHeight,
+      );
+      if (isHeroVisible) {
+        setActiveSection((current) => (current ? '' : current));
+        return;
+      }
+
+      const activationLine = window.innerHeight * 0.4;
+      const activeSection = sections.find(({ element }) => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.top <= activationLine + 1 && bounds.bottom > activationLine - 1;
+      });
+      const isAtPageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
+      const nextActiveSection = activeSection?.href ?? (isAtPageBottom ? navLinks[navLinks.length - 1].href : '');
+      setActiveSection((current) => (current === nextActiveSection ? current : nextActiveSection));
+    };
+
     const updateObservedSections = () => {
       observer?.disconnect();
       const activationLine = window.innerHeight * 0.4;
       const sectionObserver = new IntersectionObserver(
-        () => {
-          const activeSection = sections.find(({ element }) => {
-            const bounds = element.getBoundingClientRect();
-            return bounds.top <= activationLine + 1 && bounds.bottom > activationLine - 1;
-          });
-          const isAtPageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
-          setActiveSection(activeSection?.href ?? (isAtPageBottom ? navLinks[navLinks.length - 1].href : ''));
-        },
+        updateActiveSection,
         {
           rootMargin: `-${Math.max(0, activationLine - 1)}px 0px -${Math.max(0, window.innerHeight - activationLine - 1)}px 0px`,
           threshold: 0,
@@ -66,8 +80,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     let observer: IntersectionObserver | null = null;
     updateObservedSections();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
     window.addEventListener('resize', updateObservedSections);
     return () => {
+      window.removeEventListener('scroll', updateActiveSection);
       window.removeEventListener('resize', updateObservedSections);
       observer?.disconnect();
     };
@@ -82,11 +98,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     } catch {
       window.location.hash = href;
     }
-    setActiveSection(href);
 
     const el = document.querySelector(href);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -95,9 +110,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       initial={{ y: -100 }}
       animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-40 bg-ink/90 backdrop-blur-md border-b border-ink-3 transition-colors duration-300 xl:h-[88px]"
+      className="fixed top-0 left-0 right-0 z-40 bg-ink/90 backdrop-blur-md border-b border-ink-3 transition-colors duration-300 lg:h-[88px]"
     >
-      <div className="mx-auto flex h-20 w-full max-w-[1920px] items-center justify-between gap-3 px-4 sm:px-8 xl:h-[87px] xl:gap-4">
+      <div className="mx-auto flex h-20 w-full max-w-[1920px] items-center justify-between gap-3 px-4 sm:px-8 lg:h-[88px] lg:gap-3 lg:px-4 xl:gap-4 xl:px-8">
         
         {/* Brand Logo & Title */}
         <div className="flex shrink-0 items-center gap-3">
@@ -126,10 +141,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-editorial font-bold text-sm sm:text-base text-paper tracking-widest uppercase">
+                <span className="font-editorial font-bold text-sm sm:text-base lg:text-sm xl:text-base text-paper tracking-widest uppercase">
                   Creator Hub
                 </span>
-                <span className="font-tech text-xs text-lav tracking-wider">
+                <span className="inline font-tech text-xs text-lav tracking-wider lg:hidden xl:inline">
                   (YT Automation)
                 </span>
               </div>
@@ -141,7 +156,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Desktop Navigation Links with Active Highlight */}
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-[22px] px-2 xl:flex 2xl:gap-8" aria-label="Main Navigation">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-[18px] px-2 lg:flex lg:px-0 xl:px-2 2xl:gap-8" aria-label="Main Navigation">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href;
             return (
@@ -169,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Action Buttons with exact 10px spacing and rounded-full pill styling */}
-        <div className="flex shrink-0 items-center gap-[10px] xl:gap-3">
+        <div className="flex shrink-0 items-center gap-[10px] lg:gap-2 xl:gap-3">
           {/* Sound Synthesizer Toggle (44px x 44px, fully rounded-full, 8% white bg, 10% border, #B9B5C9 icon) */}
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -187,10 +202,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </motion.button>
 
           {/* Request Access Pill (Desktop: 48px, Mobile/Tablet: 44px) */}
-          <div className="hidden xl:block">
-            <RequestAccessPill onClick={onOpenApply} size="desktop" />
+          <div className="hidden lg:block">
+            <RequestAccessPill onClick={onOpenApply} size="desktop" className="lg:gap-2 lg:pl-3 xl:gap-3 xl:pl-5" />
           </div>
-          <div className="xl:hidden">
+          <div className="lg:hidden">
             <RequestAccessPill onClick={onOpenApply} size="mobile" />
           </div>
 
@@ -202,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               soundFx.playTick();
               setMobileMenuOpen(!mobileMenuOpen);
             }}
-            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-[#B9B5C9] transition-all hover:bg-white/[0.14] hover:text-white xl:hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
+            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-[#B9B5C9] transition-all hover:bg-white/[0.14] hover:text-white lg:hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -221,7 +236,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="xl:hidden bg-ink-2 border-b border-ink-3 px-5 py-6 space-y-4 shadow-2xl overflow-hidden"
+            className="lg:hidden bg-ink-2 border-b border-ink-3 px-5 py-6 space-y-4 shadow-2xl overflow-hidden"
           >
             <div className="flex flex-col space-y-1">
               {navLinks.map((link) => {

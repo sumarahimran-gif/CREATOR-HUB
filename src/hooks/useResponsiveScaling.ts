@@ -65,30 +65,34 @@ export function useResponsiveScaling(baseWidth: number = 1280): ResponsiveScaleI
 
   const info = useMemo<ResponsiveScaleInfo>(() => {
     const { width, height } = dimensions;
+    const safeBaseWidth = Math.max(320, baseWidth || 1280);
+    const smallMobileBreakpoint = safeBaseWidth * 0.296875; // ~380px for 1280px desktop base
+    const mobileBreakpoint = safeBaseWidth * 0.6; // ~768px for 1280px desktop base
+    const tabletBreakpoint = safeBaseWidth * 0.8; // ~1024px for 1280px desktop base
+    const desktopBreakpoint = safeBaseWidth; // ~1280px for 1280px desktop base
+    const wideBreakpoint = safeBaseWidth * 1.125; // ~1440px for 1280px desktop base
 
-    const isSmallMobile = width < 380;
-    const isMobile = width < 768;
-    const isTablet = width >= 768 && width < 1024;
-    const isDesktop = width >= 1024 && width < 1536;
-    const isWide = width >= 1536;
+    const isSmallMobile = width < smallMobileBreakpoint;
+    const isMobile = width < mobileBreakpoint;
+    const isTablet = width >= mobileBreakpoint && width < tabletBreakpoint;
+    const isDesktop = width >= tabletBreakpoint && width < wideBreakpoint;
+    const isWide = width >= wideBreakpoint;
 
-    // Mathematical curve calculation for continuous scaleFactor:
-    // For small mobile (< 380px): scales between 0.65 and 0.78
-    // For standard mobile (380px - 768px): scales smoothly between 0.78 and 0.92
-    // For tablet (768px - 1024px): scales between 0.92 and 0.98
-    // For standard desktop (1024px - 1440px): 1.0
-    // For wide displays (> 1440px): gently scales up to 1.12 without inflating UI
+    // Mathematical curve calculation for continuous scaleFactor.
+    // Breakpoints are derived from the supplied base width so custom layouts
+    // retain the same proportions as the default 1280px reference.
     let rawScale: number;
-    if (width < 380) {
-      rawScale = 0.65 + (width / 380) * 0.13;
-    } else if (width < 768) {
-      rawScale = 0.78 + ((width - 380) / (768 - 380)) * 0.14;
-    } else if (width < 1024) {
-      rawScale = 0.92 + ((width - 768) / (1024 - 768)) * 0.08;
-    } else if (width < 1440) {
+    if (width < smallMobileBreakpoint) {
+      rawScale = 0.65 + (width / smallMobileBreakpoint) * 0.13;
+    } else if (width < mobileBreakpoint) {
+      rawScale = 0.78 + ((width - smallMobileBreakpoint) / (mobileBreakpoint - smallMobileBreakpoint)) * 0.14;
+    } else if (width < tabletBreakpoint) {
+      rawScale = 0.92 + ((width - mobileBreakpoint) / (tabletBreakpoint - mobileBreakpoint)) * 0.08;
+    } else if (width < desktopBreakpoint) {
       rawScale = 1.0;
     } else {
-      rawScale = Math.min(1.12, 1.0 + ((width - 1440) / 1000) * 0.12);
+      const wideRange = Math.max(1, desktopBreakpoint * 0.75);
+      rawScale = Math.min(1.12, 1.0 + ((width - desktopBreakpoint) / wideRange) * 0.12);
     }
 
     // Height constraint check: on short screens or landscape mobile, gently scale down

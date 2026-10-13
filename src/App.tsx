@@ -15,6 +15,7 @@ import { Modals } from './components/Modals';
 import { BackToTopButton } from './components/BackToTopButton';
 import { ModalType } from './types';
 import { soundFx } from './utils/audio';
+import { ImageViewerProvider } from './components/ImageViewer';
 
 export default function App() {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
@@ -43,6 +44,7 @@ export default function App() {
   };
 
   return (
+    <ImageViewerProvider>
     <div className="relative min-h-screen bg-ink text-paper selection:bg-lav/30 selection:text-paper font-sans antialiased">
       {/* Subtle, High-Performance Scroll Depth Progress Bar (z-index 30, lower than modals) */}
       <ScrollProgressBar />
@@ -119,5 +121,6 @@ export default function App() {
       {/* Floating Back-To-Top Action Button (Appears past Hero section) */}
       <BackToTopButton show={showBackToTop} />
     </div>
+    </ImageViewerProvider>
   );
 }

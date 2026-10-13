@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
+import { useImageViewer } from './ImageViewer';
 
 interface ResultImage {
   src: string;
@@ -53,29 +53,7 @@ const resultImages: ResultImage[] = [
 ];
 
 export const ResultsSection: React.FC = () => {
-  const [activeImage, setActiveImage] = useState<ResultImage | null>(null);
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const viewerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!activeImage) {
-      triggerRef.current?.focus();
-      triggerRef.current = null;
-      return;
-    }
-
-    viewerRef.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        setActiveImage(null);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeImage]);
+  const { openImage } = useImageViewer();
 
   return (
     <section
@@ -112,10 +90,7 @@ export const ResultsSection: React.FC = () => {
             >
               <button
                 type="button"
-                onClick={(event) => {
-                  triggerRef.current = event.currentTarget;
-                  setActiveImage(image);
-                }}
+                onClick={() => openImage(image)}
                 aria-label={`Open image: ${image.caption}`}
                 className="flex min-h-[220px] w-full flex-1 cursor-zoom-in items-center justify-center rounded-xl bg-ink p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lav"
               >
@@ -142,40 +117,6 @@ export const ResultsSection: React.FC = () => {
         </RevealItem>
       </div>
 
-      {activeImage && (
-        <div
-          ref={viewerRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label={activeImage.alt}
-          tabIndex={-1}
-          onClick={(event) => {
-            if (event.target === event.currentTarget) {
-              setActiveImage(null);
-            }
-          }}
-          className="fixed inset-0 z-[60] overflow-auto bg-ink outline-none"
-        >
-          <button
-            type="button"
-            onClick={() => setActiveImage(null)}
-            aria-label="Close image viewer"
-            className="fixed right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-ink-2 text-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lav"
-          >
-            <X className="h-5 w-5" />
-          </button>
-          <div className="grid min-h-full min-w-full w-max place-items-center p-4">
-            <img
-              src={activeImage.src}
-              alt={activeImage.alt}
-              width={activeImage.width}
-              height={activeImage.height}
-              loading="lazy"
-              className="h-auto w-auto max-w-none object-contain"
-            />
-          </div>
-        </div>
-      )}
     </section>
   );
 };
