@@ -72,7 +72,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
       setShockwave(false);
       setLogoPulse(false);
     }, 850);
-    openImage({ src: logoSrc, alt: 'Creator Hub Medallion', width: 500, height: 500 });
+    openImage({ src: logoSrc, alt: 'Creator Hub chrome medallion logo', width: 500, height: 500 });
     if (onLogoClick) onLogoClick();
   };
 

@@ -15,7 +15,7 @@ interface ResultImage {
 const resultImages: ResultImage[] = [
   {
     src: '/results/channel-analytics.jpg',
-    alt: 'YouTube Studio channel analytics.',
+    alt: "Screenshot of YouTube Studio channel analytics for a creator's channel.",
     caption: 'Channel analytics.',
     width: 1179,
     height: 556,
@@ -23,21 +23,21 @@ const resultImages: ResultImage[] = [
   },
   {
     src: '/results/silver-play-button.jpg',
-    alt: 'Silver Play Button. 100,000 subscribers.',
+    alt: 'YouTube Silver Creator Award recognizing 100,000 subscribers.',
     caption: 'Silver Play Button. 100,000 subscribers.',
     width: 226,
     height: 180,
   },
   {
     src: '/results/shorts-audience-retention.png',
-    alt: 'Shorts audience retention.',
+    alt: 'Screenshot of audience retention analytics for a YouTube Short.',
     caption: 'Shorts audience retention.',
     width: 1108,
     height: 768,
   },
   {
     src: '/results/estimated-earnings.jpg',
-    alt: 'Estimated earnings.',
+    alt: 'Screenshot showing estimated earnings from YouTube content.',
     caption: 'Estimated earnings.',
     width: 1373,
     height: 414,
@@ -45,7 +45,7 @@ const resultImages: ResultImage[] = [
   },
   {
     src: '/results/estimated-revenue.png',
-    alt: 'Estimated revenue.',
+    alt: 'Screenshot showing estimated revenue from YouTube content.',
     caption: 'Estimated revenue.',
     width: 768,
     height: 1367,

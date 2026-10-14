@@ -59,7 +59,7 @@ export const ChromeMedallion: React.FC<ChromeMedallionProps> = ({
         {/* Crisp High-Res Logo Imagery */}
         <img
           src={logoSrc}
-          alt="Creator Hub Medallion"
+          alt="Creator Hub chrome medallion logo"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover rounded-full select-none pointer-events-none"
         />
