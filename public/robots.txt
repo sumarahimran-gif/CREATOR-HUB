@@ -1,3 +1,7 @@
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: *
 Allow: /
+
 Sitemap: https://mani-singh.netlify.app/sitemap.xml
