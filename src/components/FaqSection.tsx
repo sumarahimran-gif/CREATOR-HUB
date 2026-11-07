@@ -75,6 +75,19 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
     },
   ];
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   const toggleFaq = (index: number) => {
     soundFx.playTick();
     setOpenIndex(openIndex === index ? null : index);
@@ -110,6 +123,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
           </RevealItem>
         </div>
 
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+
         {/* Accordion List with Shared Reveal System */}
         <RevealGroup className="border-t border-ink-3 divide-y divide-ink-3" stagger={0.06}>
           {faqs.map((faq, index) => {
@@ -137,37 +152,36 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                     </div>
                   </button>
 
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        id={`faq-answer-${index}`}
-                        role="region"
-                        aria-labelledby={`faq-question-${index}`}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pb-6 sm:pb-7 pr-6 text-base text-paper-dim font-sans leading-relaxed space-y-3">
-                          <p>{faq.answer}</p>
-                          {faq.isRefund && (
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                soundFx.playTick();
-                                onOpenRefundPolicy();
-                              }}
-                              className="inline-flex items-center gap-1.5 text-sm font-tech text-lav underline underline-offset-4 hover:text-paper pt-1 cursor-pointer"
-                            >
-                              <span>Read full Return & Refund Policy</span>
-                              <ArrowUpRight className="w-3.5 h-3.5" />
-                            </button>
-                          )}
-                        </div>
-                      </motion.div>
-                    )}
+                  <AnimatePresence initial={false}>
+                    <motion.div
+                      id={`faq-answer-${index}`}
+                      role="region"
+                      aria-labelledby={`faq-question-${index}`}
+                      aria-hidden={!isOpen}
+                      initial={false}
+                      animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-6 sm:pb-7 pr-6 text-base text-paper-dim font-sans leading-relaxed space-y-3">
+                        <p>{faq.answer}</p>
+                        {faq.isRefund && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              soundFx.playTick();
+                              onOpenRefundPolicy();
+                            }}
+                            className="inline-flex items-center gap-1.5 text-sm font-tech text-lav underline underline-offset-4 hover:text-paper pt-1 cursor-pointer"
+                          >
+                            <span>Read full Return & Refund Policy</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+                    </motion.div>
                   </AnimatePresence>
                 </div>
               </motion.div>
