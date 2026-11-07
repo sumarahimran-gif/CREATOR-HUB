@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUp, Instagram, Mail } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
+import { PressFeedbackButton } from './PressFeedbackButton';
 import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
 import { motion } from 'motion/react';
 
@@ -193,21 +194,23 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
 
           {/* Back to Top */}
           <div className="md:col-span-3 flex md:justify-end">
-            <button
+            <PressFeedbackButton
+              size="sm"
               type="button"
               onClick={scrollToTop}
-              className="px-4 py-2.5 border border-ink-3 bg-ink-2 hover:border-lav text-xs font-tech uppercase tracking-wider text-paper-dim hover:text-paper flex items-center gap-2 cursor-pointer transition-colors duration-200"
+              className="px-4 py-2.5 border border-ink-3 bg-ink-2 text-xs font-tech uppercase tracking-wider text-paper-dim hover:text-paper flex items-center gap-2 cursor-pointer transition-colors duration-200"
             >
               <span>Back to top ↑</span>
               <ArrowUp className="w-3.5 h-3.5" />
-            </button>
+            </PressFeedbackButton>
           </div>
         </div>
 
         {/* Legal & Copyright Bar */}
         <div className="pt-8 border-t border-ink-3 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm font-tech text-paper-dim">
           <div className="flex flex-wrap items-center gap-4">
-            <button
+            <PressFeedbackButton
+              size="row"
               type="button"
               onClick={() => {
                 soundFx.playTick();
@@ -216,9 +219,10 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
               className="hover:text-lav transition-colors cursor-pointer"
             >
               Privacy Policy
-            </button>
+            </PressFeedbackButton>
             <span>•</span>
-            <button
+            <PressFeedbackButton
+              size="row"
               type="button"
               onClick={() => {
                 soundFx.playTick();
@@ -227,9 +231,10 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
               className="hover:text-lav transition-colors cursor-pointer"
             >
               Terms & Conditions
-            </button>
+            </PressFeedbackButton>
             <span>•</span>
-            <button
+            <PressFeedbackButton
+              size="row"
               type="button"
               onClick={() => {
                 soundFx.playTick();
@@ -238,7 +243,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
               className="hover:text-lav transition-colors cursor-pointer"
             >
               Return & Refund Policy
-            </button>
+            </PressFeedbackButton>
           </div>
 
           <div>

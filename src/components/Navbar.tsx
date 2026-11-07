@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, VolumeX, Menu, X } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { RequestAccessPill } from './RequestAccessPill';
+import { PressFeedbackButton } from './PressFeedbackButton';
 import logoSrc from '../assets/images/logo-nav-80.webp';
 
 interface NavbarProps {
@@ -186,20 +187,19 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right Action Buttons with exact 10px spacing and rounded-full pill styling */}
         <div className="flex shrink-0 items-center gap-[10px] lg:gap-2 xl:gap-3">
           {/* Sound Synthesizer Toggle (44px x 44px, fully rounded-full, 8% white bg, 10% border, #B9B5C9 icon) */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <PressFeedbackButton
+            size="sm"
             onClick={onToggleSound}
             className="w-[44px] h-[44px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white flex items-center justify-center shrink-0 transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
             title={soundEnabled ? 'Disable Tactile Sound FX' : 'Enable Tactile Sound FX'}
             aria-label="Toggle Sound Effects"
           >
             {soundEnabled ? (
-              <Volume2 className="w-4 h-4 text-lav group-hover:scale-110 transition-transform" />
+              <Volume2 className="w-4 h-4 text-lav" />
             ) : (
-              <VolumeX className="w-4 h-4 text-[#B9B5C9] group-hover:scale-110 transition-transform" />
+              <VolumeX className="w-4 h-4 text-[#B9B5C9]" />
             )}
-          </motion.button>
+          </PressFeedbackButton>
 
           {/* Request Access Pill (Desktop: 48px, Mobile/Tablet: 44px) */}
           <div className="hidden lg:block">
@@ -210,9 +210,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Menu Hamburger (44px x 44px, fully rounded-full, 8% white bg, 10% border, #B9B5C9 icon) */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <PressFeedbackButton
+            size="sm"
             onClick={() => {
               soundFx.playTick();
               setMobileMenuOpen(!mobileMenuOpen);
@@ -223,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-controls="mobile-menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5" />}
-          </motion.button>
+          </PressFeedbackButton>
         </div>
       </div>
 
@@ -257,7 +256,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="pt-2 flex flex-col gap-3">
-              <button
+              <PressFeedbackButton
+                size="lg"
                 type="button"
                 onClick={() => {
                   soundFx.playTick();
@@ -267,7 +267,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="w-full h-[48px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center transition-all cursor-pointer"
               >
                 Ask a Question →
-              </button>
+              </PressFeedbackButton>
 
               {/* Full width 54px pill with arrow chip on right */}
               <RequestAccessPill

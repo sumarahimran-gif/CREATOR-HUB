@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Plus, Minus, ArrowUpRight } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { SecondaryCta } from './CtaButtons';
+import { PressFeedbackButton } from './PressFeedbackButton';
 import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
 
 interface FaqSectionProps {
@@ -133,10 +134,11 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
               <motion.div
                 key={index}
                 variants={revealChildVariants}
-                className="transition-colors hover:bg-paper/[0.02]"
+                className="transition-colors"
               >
                 <div>
-                  <button
+                  <PressFeedbackButton
+                    size="row"
                     type="button"
                     id={`faq-question-${index}`}
                     aria-expanded={isOpen}
@@ -150,7 +152,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                     <div className={`w-8 h-8 border flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'border-lav bg-lav-deep/20 text-lav' : 'border-ink-3 text-paper-dim bg-ink-2 group-hover:border-paper-dim'}`}>
                       {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     </div>
-                  </button>
+                  </PressFeedbackButton>
 
                   <AnimatePresence initial={false}>
                     <motion.div

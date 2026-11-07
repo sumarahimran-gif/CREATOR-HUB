@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { ModalType } from '../types';
 import { soundFx } from '../utils/audio';
+import { PressFeedbackButton } from './PressFeedbackButton';
 
 interface ModalsProps {
   activeModal: ModalType;
@@ -147,14 +148,15 @@ export const Modals: React.FC<ModalsProps> = ({
           }`}
         >
           {/* Close Button */}
-          <button
+          <PressFeedbackButton
+            size="sm"
             type="button"
             onClick={resetAndClose}
             className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 text-paper-dim hover:text-paper hover:bg-ink-3/80 transition-colors border border-ink-3 bg-ink cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-lav z-20"
             aria-label="Close modal"
           >
             <X className="w-4 h-4" />
-          </button>
+          </PressFeedbackButton>
 
           {/* 1. APPLICATION FORM MODAL (Official Google Form Embed + Fallback) */}
           {activeModal === 'apply' && (
