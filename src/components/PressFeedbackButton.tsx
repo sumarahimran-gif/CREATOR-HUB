@@ -1,6 +1,12 @@
 import React from 'react';
 import { motion, type HTMLMotionProps, useReducedMotion } from 'motion/react';
 
+export const pressFeedbackSpring = {
+  type: 'spring' as const,
+  stiffness: 400,
+  damping: 17,
+};
+
 type PressFeedbackButtonProps = Omit<
   HTMLMotionProps<'button'>,
   | 'whileHover'
@@ -8,7 +14,7 @@ type PressFeedbackButtonProps = Omit<
   | 'transition'
   | 'size'
 > & {
-  size?: 'lg' | 'sm' | 'row';
+  size?: 'lg' | 'sm' | 'row' | 'link';
 };
 
 export const PressFeedbackButton: React.FC<PressFeedbackButtonProps> = ({
@@ -22,14 +28,17 @@ export const PressFeedbackButton: React.FC<PressFeedbackButtonProps> = ({
   onPointerCancel,
   onTouchEnd,
   onBlur,
+  style,
   ...props
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const [isHoverScaleEnabled, setIsHoverScaleEnabled] = React.useState(false);
   const [isPressed, setIsPressed] = React.useState(false);
-  const hoverScale = size === 'lg' ? 1.04 : size === 'sm' ? 1.08 : 1;
-  const tapScale = size === 'lg' ? 1.07 : size === 'sm' ? 1.14 : 1.015;
+  const hoverScale =
+    size === 'lg' ? 1.04 : size === 'sm' ? 1.08 : size === 'link' ? 1.05 : 1;
+  const tapScale =
+    size === 'lg' ? 1.07 : size === 'sm' ? 1.14 : size === 'link' ? 1.1 : 1.015;
   const baseAnimate =
     typeof animate === 'object' &&
     animate !== null &&
@@ -39,7 +48,7 @@ export const PressFeedbackButton: React.FC<PressFeedbackButtonProps> = ({
       : {};
   const transition = shouldReduceMotion
     ? { duration: 0 }
-    : { type: 'spring' as const, stiffness: 400, damping: 17 };
+    : pressFeedbackSpring;
 
   const clearFeedback = () => {
     setIsHovered(false);
@@ -92,6 +101,12 @@ export const PressFeedbackButton: React.FC<PressFeedbackButtonProps> = ({
       onBlur={(event) => {
         clearFeedback();
         onBlur?.(event);
+      }}
+      style={{
+        ...style,
+        ...(size === 'link'
+          ? { display: 'inline-block', transformOrigin: 'left center' }
+          : {}),
       }}
       className={props.className}
     >

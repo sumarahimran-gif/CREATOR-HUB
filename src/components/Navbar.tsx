@@ -4,6 +4,7 @@ import { Volume2, VolumeX, Menu, X } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { RequestAccessPill } from './RequestAccessPill';
 import { PressFeedbackButton } from './PressFeedbackButton';
+import { PressFeedbackLink } from './PressFeedbackLink';
 import logoSrc from '../assets/images/logo-nav-80.webp';
 
 interface NavbarProps {
@@ -117,7 +118,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         
         {/* Brand Logo & Title */}
         <div className="flex shrink-0 items-center gap-3">
-          <a
+          <PressFeedbackLink
+            origin="center"
+            inlineFlex
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -153,7 +156,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Private YouTube Automation Community
               </span>
             </div>
-          </a>
+          </PressFeedbackLink>
         </div>
 
         {/* Desktop Navigation Links with Active Highlight */}
@@ -161,7 +164,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           {navLinks.map((link) => {
             const isActive = activeSection === link.href;
             return (
-              <a
+              <PressFeedbackLink
+                origin="center"
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
@@ -179,7 +183,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
-              </a>
+              </PressFeedbackLink>
             );
           })}
         </nav>
@@ -241,7 +245,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href;
                 return (
-                  <a
+                  <PressFeedbackLink
+                    origin="center"
                     key={link.label}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
@@ -250,7 +255,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }`}
                   >
                     {link.label}
-                  </a>
+                  </PressFeedbackLink>
                 );
               })}
             </div>

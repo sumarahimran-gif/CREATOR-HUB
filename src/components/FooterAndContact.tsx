@@ -3,6 +3,7 @@ import { ArrowUp, Instagram, Mail } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
 import { PressFeedbackButton } from './PressFeedbackButton';
+import { PressFeedbackLink } from './PressFeedbackLink';
 import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
 import { motion } from 'motion/react';
 
@@ -160,9 +161,16 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
           {/* Brand & Description */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-2">
-              <span className="font-editorial font-bold text-lg text-paper tracking-widest uppercase">
+              <PressFeedbackLink
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToTop();
+                }}
+                className="font-editorial font-bold text-lg text-paper tracking-widest uppercase"
+              >
                 Creator Hub
-              </span>
+              </PressFeedbackLink>
               <span className="font-tech text-xs text-lav tracking-wider">
                 (YT Automation)
               </span>
@@ -178,16 +186,17 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
             <span className="text-xs font-tech text-paper-dim uppercase tracking-widest block mb-2 font-medium">
               Navigation
             </span>
-            <div className="grid grid-cols-2 gap-2 text-sm font-tech text-paper-dim uppercase">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm font-tech text-paper-dim uppercase">
               {navLinks.map((link) => (
-                <a
+                <PressFeedbackLink
+                  origin="left"
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className="hover:text-lav transition-colors py-0.5"
                 >
                   {link.label}
-                </a>
+                </PressFeedbackLink>
               ))}
             </div>
           </div>
@@ -195,13 +204,15 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
           {/* Back to Top */}
           <div className="md:col-span-3 flex md:justify-end">
             <PressFeedbackButton
-              size="sm"
+              size="link"
               type="button"
               onClick={scrollToTop}
-              className="px-4 py-2.5 border border-ink-3 bg-ink-2 text-xs font-tech uppercase tracking-wider text-paper-dim hover:text-paper flex items-center gap-2 cursor-pointer transition-colors duration-200"
+              className="px-4 py-2.5 border border-ink-3 bg-ink-2 text-xs font-tech uppercase tracking-wider text-paper-dim hover:text-paper cursor-pointer transition-colors duration-200"
             >
-              <span>Back to top ↑</span>
-              <ArrowUp className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-2">
+                <span>Back to top</span>
+                <ArrowUp className="w-3.5 h-3.5" />
+              </span>
             </PressFeedbackButton>
           </div>
         </div>
@@ -210,7 +221,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
         <div className="pt-8 border-t border-ink-3 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm font-tech text-paper-dim">
           <div className="flex flex-wrap items-center gap-4">
             <PressFeedbackButton
-              size="row"
+              size="link"
               type="button"
               onClick={() => {
                 soundFx.playTick();
@@ -222,7 +233,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
             </PressFeedbackButton>
             <span>•</span>
             <PressFeedbackButton
-              size="row"
+              size="link"
               type="button"
               onClick={() => {
                 soundFx.playTick();
@@ -234,7 +245,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
             </PressFeedbackButton>
             <span>•</span>
             <PressFeedbackButton
-              size="row"
+              size="link"
               type="button"
               onClick={() => {
                 soundFx.playTick();
