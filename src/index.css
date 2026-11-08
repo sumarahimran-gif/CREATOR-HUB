@@ -10,6 +10,8 @@
   --color-lav-deep: #286BFF;
   --color-lav-soft: #8FB0FF;
   --color-sand: #D8C8AA;
+  --color-sand-panel: #E3D6BC;
+  --color-sand-border: #C4B69F;
   --color-sand-ink: #5A5243;
   --color-blue-ink: #1240B8;
   --color-line: rgb(240 233 220 / 0.12);
@@ -154,14 +156,14 @@ section[id] {
 @keyframes logo-ripple-pulse {
   0% {
     transform: scale(0.85);
-    opacity: 0.85;
-    border-color: color-mix(in srgb, var(--color-lav) 70%, transparent);
-    box-shadow: 0 0 15px color-mix(in srgb, var(--color-lav) 45%, transparent);
+    opacity: 0.425;
+    border-color: color-mix(in srgb, var(--color-lav) 35%, transparent);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.12);
   }
   50% {
-    opacity: 0.35;
-    border-color: color-mix(in srgb, var(--color-lav-deep) 35%, transparent);
-    box-shadow: 0 0 25px color-mix(in srgb, var(--color-lav-deep) 25%, transparent);
+    opacity: 0.175;
+    border-color: color-mix(in srgb, var(--color-lav-deep) 17.5%, transparent);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.12);
   }
   100% {
     transform: scale(2.2);

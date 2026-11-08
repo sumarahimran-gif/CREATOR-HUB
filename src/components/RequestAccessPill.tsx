@@ -27,7 +27,7 @@ export const RequestAccessPill: React.FC<RequestAccessPillProps> = ({
         size="lg"
         type="button"
         onClick={handleClick}
-        className={`group relative overflow-hidden w-full h-[54px] rounded-full pl-6 pr-2 bg-lav-deep text-white shadow-[0_10px_40px_-10px_color-mix(in_srgb,var(--color-lav)_55%,transparent)] flex items-center justify-between transition-colors duration-300 cursor-pointer outline-none ${className}`}
+        className={`group relative overflow-hidden w-full h-[54px] rounded-full pl-6 pr-2 bg-lav-deep text-white shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] flex items-center justify-between transition-colors duration-300 cursor-pointer outline-none ${className}`}
       >
         <span className="relative z-10 font-editorial text-[15px] sm:text-[16px] font-semibold tracking-[0.04em] whitespace-nowrap text-white select-none">
           Request Access
@@ -45,7 +45,7 @@ export const RequestAccessPill: React.FC<RequestAccessPillProps> = ({
         size="lg"
         type="button"
         onClick={handleClick}
-        className={`group relative overflow-hidden h-[44px] rounded-full pl-4 sm:pl-5 pr-1.5 bg-lav-deep text-white shadow-[0_10px_40px_-10px_color-mix(in_srgb,var(--color-lav)_55%,transparent)] inline-flex items-center justify-between gap-3 transition-colors duration-300 cursor-pointer outline-none ${
+        className={`group relative overflow-hidden h-[44px] rounded-full pl-4 sm:pl-5 pr-1.5 bg-lav-deep text-white shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] inline-flex items-center justify-between gap-3 transition-colors duration-300 cursor-pointer outline-none ${
           isFullWidth ? 'w-full' : ''
         } ${className}`}
       >
@@ -65,7 +65,7 @@ export const RequestAccessPill: React.FC<RequestAccessPillProps> = ({
       size="lg"
       type="button"
       onClick={handleClick}
-      className={`group relative overflow-hidden h-[48px] rounded-full pl-5 pr-1.5 bg-lav-deep text-white shadow-[0_10px_40px_-10px_color-mix(in_srgb,var(--color-lav)_55%,transparent)] inline-flex items-center justify-between gap-3 transition-colors duration-300 cursor-pointer outline-none ${
+      className={`group relative overflow-hidden h-[48px] rounded-full pl-5 pr-1.5 bg-lav-deep text-white shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] inline-flex items-center justify-between gap-3 transition-colors duration-300 cursor-pointer outline-none ${
         isFullWidth ? 'w-full' : ''
       } ${className}`}
     >

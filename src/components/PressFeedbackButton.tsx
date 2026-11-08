@@ -68,9 +68,7 @@ export const PressFeedbackButton: React.FC<PressFeedbackButtonProps> = ({
             : isHoverScaleEnabled
               ? hoverScale
               : 1,
-        filter: isHovered
-          ? 'drop-shadow(0 0 7px color-mix(in srgb, var(--color-lav) 35%, transparent))'
-          : 'none',
+        filter: isHovered ? 'drop-shadow(0 8px 24px rgb(0 0 0 / 0.35))' : 'none',
       }}
       transition={transition}
       onPointerEnter={(event) => {

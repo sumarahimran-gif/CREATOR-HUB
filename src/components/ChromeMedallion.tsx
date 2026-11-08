@@ -38,18 +38,18 @@ export const ChromeMedallion: React.FC<ChromeMedallionProps> = ({
       className={`relative inline-flex items-center justify-center select-none ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* 1. Subtle, disciplined ambient blue backlight */}
+      {/* 1. Subtle, disciplined neutral backlight */}
       <div
         className="absolute -inset-6 rounded-full blur-2xl pointer-events-none transition-opacity duration-500"
         style={{
           opacity: isHovered ? 0.45 : 0.22,
-          background: 'radial-gradient(circle, color-mix(in srgb, var(--color-lav) 45%, transparent) 0%, color-mix(in srgb, var(--color-lav-deep) 18%, transparent) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, rgb(255 255 255 / 0.08) 0%, rgb(0 0 0 / 0.12) 40%, transparent 70%)',
         }}
       />
 
       {/* 2. Outer Chrome Bevel Border Ring with Controlled 3D Specular Response */}
       <div
-        className="relative w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-ink-3 via-paper-dim to-ink-2 shadow-[0_20px_50px_rgba(0,0,0,0.95)] overflow-hidden transition-transform duration-300 ease-out z-10"
+        className="relative w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-ink-3 via-paper-dim to-ink-2 shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] overflow-hidden transition-transform duration-300 ease-out z-10"
         style={{
           transform: interactive && isHovered
             ? `perspective(800px) rotateX(${-hoverPos.y * 10}deg) rotateY(${hoverPos.x * 10}deg) scale3d(1.02, 1.02, 1.02)`

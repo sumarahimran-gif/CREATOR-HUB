@@ -130,7 +130,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
         transition={{ repeat: Infinity, duration: 4.8, ease: 'easeInOut' }}
         className="absolute inset-0 pointer-events-none z-0"
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[320px] bg-lav/10 blur-[130px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[320px] bg-white/[0.04] blur-[130px] rounded-full pointer-events-none" />
       </motion.div>
 
       {/* 3. Main Lockup Container (Fades and lifts on scroll-out) */}
@@ -265,20 +265,20 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                   title="Creator Hub Medallion — Click to interact"
                   aria-label="Creator Hub Medallion"
                 >
-                  {/* Single Lavender Ring Shockwave & Light Bloom on Click */}
+                  {/* Single blue ring shockwave and subtle neutral bloom on click */}
                   {shockwave && (
                     <>
                       <motion.span
-                        initial={{ scale: 0.85, opacity: 0.95 }}
+                        initial={{ scale: 0.85, opacity: 0.475 }}
                         animate={{ scale: 2.8, opacity: 0 }}
                         transition={{ duration: 0.85, ease: EXPO_OUT }}
-                        className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_0_50px_color-mix(in_srgb,var(--color-lav)_90%,transparent)] pointer-events-none z-30"
+                        className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] pointer-events-none z-30"
                       />
                       <motion.span
-                        initial={{ scale: 0.9, opacity: 0.8 }}
+                        initial={{ scale: 0.9, opacity: 0.4 }}
                         animate={{ scale: 2.2, opacity: 0 }}
                         transition={{ duration: 0.7, ease: 'easeOut' }}
-                        className="absolute inset-0 rounded-full bg-lav/40 blur-2xl pointer-events-none z-30"
+                        className="absolute inset-0 rounded-full bg-white/10 blur-2xl pointer-events-none z-30"
                       />
                     </>
                   )}
@@ -286,10 +286,10 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                   {/* Reactive pulse on logo clicks */}
                   {logoPulse && (
                     <motion.span
-                      initial={{ scale: 0.85, opacity: 0.95 }}
+                      initial={{ scale: 0.85, opacity: 0.475 }}
                       animate={{ scale: 1.7, opacity: 0 }}
                       transition={{ duration: 0.65, ease: EXPO_OUT }}
-                      className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_0_40px_color-mix(in_srgb,var(--color-lav)_85%,transparent)] pointer-events-none z-30"
+                      className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] pointer-events-none z-30"
                     />
                   )}
 

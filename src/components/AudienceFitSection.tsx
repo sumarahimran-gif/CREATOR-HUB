@@ -61,7 +61,7 @@ export const AudienceFitSection: React.FC = () => {
   return (
     <section
       id="who-its-for"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-paper text-ink border-t border-ink/10 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-sand text-ink border-t border-sand-border overflow-hidden"
     >
       <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
         {/* Section Header */}

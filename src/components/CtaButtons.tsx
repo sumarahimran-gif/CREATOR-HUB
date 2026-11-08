@@ -9,7 +9,7 @@ import { PressFeedbackButton } from './PressFeedbackButton';
 // - Font: Syne (font-editorial), 14px, weight 600, tracking 0.04em, normal case
 // - Fill: blue with white text.
 // - 32px circular sand chip with an ink arrow
-// - Diffuse blue glow shadow on hover
+// - Soft neutral shadow and inner highlight
 // - Press grows slightly with a spring return, focus-visible 2px ring with 3px offset
 // - The same palette is used on light and dark sections.
 // =========================================================================
@@ -42,7 +42,7 @@ export const PrimaryCta: React.FC<PrimaryCtaProps> = ({
       type="button"
       disabled={disabled}
       onClick={handleClick}
-      className={`group relative overflow-hidden rounded-full h-[56px] sm:h-[52px] pl-6 sm:pl-7 pr-2.5 sm:pr-3 inline-flex items-center justify-between sm:justify-center gap-3.5 transition-colors duration-300 cursor-pointer bg-lav-deep text-white shadow-[0_10px_40px_-10px_color-mix(in_srgb,var(--color-lav)_55%,transparent)] ${className}`}
+      className={`group relative overflow-hidden rounded-full h-[56px] sm:h-[52px] pl-6 sm:pl-7 pr-2.5 sm:pr-3 inline-flex items-center justify-between sm:justify-center gap-3.5 transition-colors duration-300 cursor-pointer bg-lav-deep text-white shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] ${className}`}
     >
       {/* Label in display font (normal case, 14px, weight 600, tracking 0.04em) */}
       <span className="relative z-10 font-editorial text-[14px] font-semibold tracking-[0.04em] whitespace-nowrap select-none">

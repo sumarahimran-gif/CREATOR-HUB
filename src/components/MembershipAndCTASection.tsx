@@ -27,7 +27,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
   return (
     <section
       id="membership"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-paper text-ink border-t border-ink/10 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-sand text-ink border-t border-sand-border overflow-hidden"
     >
       <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
         {/* Header */}
@@ -56,7 +56,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
 
         {/* Minimal High-Contrast Membership Panel (Light Architectural Surface) */}
         <RevealItem delay={0.1}>
-          <div className="border border-ink/15 bg-paper p-8 sm:p-12 lg:p-14 shadow-lg hover:border-ink/30 transition-colors">
+          <div className="border border-sand-border bg-sand-panel p-8 sm:p-12 lg:p-14 shadow-lg hover:border-ink/30 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               
               {/* Left Column: Details & Inclusions */}
@@ -89,7 +89,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
               </div>
 
               {/* Right Column: Direct CTA & What It Costs */}
-              <div className="lg:col-span-5 p-8 sm:p-10 border border-ink/15 bg-paper space-y-6 flex flex-col justify-between">
+              <div className="lg:col-span-5 p-8 sm:p-10 border border-sand-border bg-sand-panel space-y-6 flex flex-col justify-between">
                 <div className="space-y-3.5">
                   <div className="flex items-center justify-between text-xs sm:text-sm font-tech uppercase tracking-widest text-sand-ink border-b border-ink/10 pb-3.5">
                     <span>Admissions</span>
@@ -106,7 +106,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                   </div>
 
                   {/* "What it costs" line near Membership CTA */}
-                  <div className="p-3.5 border border-ink/15 bg-paper/70 space-y-1">
+                  <div className="p-3.5 border border-sand-border bg-sand-panel/70 space-y-1">
                     <span className="text-xs font-tech text-sand-ink uppercase tracking-wider block">
                       What it costs
                     </span>

@@ -130,9 +130,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             }}
             className="group relative flex cursor-pointer items-center gap-3 whitespace-nowrap p-1 outline-none"
           >
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-lav/40 bg-ink-2 p-0.5 shadow-[0_0_15px_color-mix(in_srgb,var(--color-lav)_30%,transparent)] transition-all group-hover:border-lav group-hover:shadow-[0_0_25px_color-mix(in_srgb,var(--color-lav)_60%,transparent)] xl:h-[52px] xl:w-[52px]">
-              {/* Soft Ambient Lavender Halo */}
-              <div className="absolute -inset-1 rounded-full bg-lav/15 blur-[6px] pointer-events-none group-hover:bg-lav/30 transition-all" />
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-lav/40 bg-ink-2 p-0.5 shadow-[0_8px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all group-hover:border-lav xl:h-[52px] xl:w-[52px]">
+              {/* Soft neutral ambient halo */}
+              <div className="absolute -inset-1 rounded-full bg-white/5 blur-[6px] pointer-events-none group-hover:bg-white/10 transition-all" />
 
               <img
                 src={logoSrc}

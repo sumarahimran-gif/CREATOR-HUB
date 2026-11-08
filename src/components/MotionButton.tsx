@@ -27,7 +27,7 @@ export const MotionButton: React.FC<MotionButtonProps> = ({
 
   const variantClasses = {
     primary:
-      'bg-lav-deep text-white hover:bg-blue-ink hover:shadow-[0_0_20px_color-mix(in_srgb,var(--color-lav)_40%,transparent)] font-editorial font-bold tracking-widest text-xs py-3.5 px-7 sm:px-8 border border-lav-deep transition-colors duration-200',
+      'bg-lav-deep text-white hover:bg-blue-ink font-editorial font-bold tracking-widest text-xs py-3.5 px-7 sm:px-8 border border-lav-deep transition-colors duration-200',
     secondary:
       'border border-line-strong bg-ink-2/80 text-sand hover:text-paper hover:border-lav hover:bg-ink-3 font-tech tracking-wider text-xs py-3.5 px-6 transition-colors duration-200',
     outline:
