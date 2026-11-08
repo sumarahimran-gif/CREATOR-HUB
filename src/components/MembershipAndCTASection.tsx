@@ -42,7 +42,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
           <RevealHeading
             text="One community. Everything you need in one place."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-ink tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-ink tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
@@ -65,7 +65,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                   <span className="text-xs sm:text-sm font-tech text-sand-ink uppercase tracking-widest block font-medium">
                     All-Inclusive Membership
                   </span>
-                  <h3 className="font-editorial font-bold text-xl sm:text-2xl text-ink uppercase tracking-tight">
+                  <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-ink uppercase tracking-[-0.02em]">
                     Your Creator Hub membership includes:
                   </h3>
                 </div>
@@ -97,7 +97,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                   </div>
 
                   <div className="space-y-2 pt-1">
-                    <h4 className="font-editorial font-bold text-xl text-ink uppercase tracking-tight">
+                    <h4 className="font-editorial font-semibold text-xl text-ink uppercase tracking-[-0.02em]">
                       Private Admissions
                     </h4>
                     <p className="text-base text-sand-ink font-sans leading-relaxed">

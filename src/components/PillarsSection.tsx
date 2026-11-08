@@ -88,7 +88,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenApply }) =
           <RevealHeading
             text="Three foundational pillars."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
@@ -121,7 +121,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenApply }) =
 
                 {/* Title & Subtitle */}
                 <div className="space-y-1.5">
-                  <h3 className="font-editorial font-bold text-xl sm:text-2xl text-paper tracking-tight uppercase group-hover:text-lav-soft transition-colors">
+                  <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-paper tracking-[-0.02em] uppercase group-hover:text-lav-soft transition-colors">
                     {pillar.title}
                   </h3>
                   <span className="text-xs sm:text-sm font-tech text-paper-dim tracking-[0.1em] uppercase block">

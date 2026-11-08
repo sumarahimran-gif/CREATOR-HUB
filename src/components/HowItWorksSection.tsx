@@ -69,7 +69,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
           <RevealHeading
             text="From application to Creator Hub in a few straightforward steps."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
@@ -90,7 +90,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               className="border-t border-ink-3 pt-8 flex flex-col justify-between space-y-7 group hover:border-lav/50 transition-colors"
             >
               <div className="space-y-4">
-                <span className="font-editorial font-black text-3xl text-paper-dim group-hover:text-lav transition-colors block">
+                <span className="font-editorial font-bold text-3xl text-paper-dim group-hover:text-lav transition-colors block">
                   0{item.step}
                 </span>
 
@@ -98,7 +98,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                   {item.tag}
                 </span>
 
-                <h3 className="font-editorial font-bold text-lg sm:text-xl text-paper uppercase tracking-tight group-hover:text-lav-soft transition-colors">
+                <h3 className="font-editorial font-semibold text-lg sm:text-xl text-paper uppercase tracking-[-0.02em] group-hover:text-lav-soft transition-colors">
                   {item.title}
                 </h3>
 

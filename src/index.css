@@ -18,8 +18,8 @@
   --color-line-strong: rgb(240 233 220 / 0.2);
 
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-editorial: 'Syne', sans-serif;
-  --font-tech: 'Space Mono', monospace;
+  --font-editorial: 'Space Grotesk', system-ui, sans-serif;
+  --font-tech: 'IBM Plex Mono', monospace;
 }
 
 @layer base {
@@ -51,8 +51,12 @@
 
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-editorial);
-    letter-spacing: -0.035em;
+    letter-spacing: -0.02em;
     font-weight: 700;
+  }
+
+  h3, h4 {
+    font-weight: 600;
   }
 
   .font-editorial {

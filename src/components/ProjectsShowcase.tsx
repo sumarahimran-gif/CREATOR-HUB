@@ -66,7 +66,7 @@ export const ProjectsShowcase: React.FC = () => {
           <RevealHeading
             text="The resources and support you need to move forward with confidence."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
@@ -94,7 +94,7 @@ export const ProjectsShowcase: React.FC = () => {
                 <div className="space-y-6">
                   {/* Top Metadata Bar */}
                   <div className="flex items-center justify-between border-b border-ink-3 pb-3.5">
-                    <span className="font-editorial font-black text-2xl text-paper-dim group-hover:text-lav transition-colors">
+                    <span className="font-editorial font-bold text-2xl text-paper-dim group-hover:text-lav transition-colors">
                       {item.num}
                     </span>
                     <div className="w-8 h-8 border border-ink-3 bg-ink flex items-center justify-center group-hover:border-lav/50 transition-all">
@@ -106,7 +106,7 @@ export const ProjectsShowcase: React.FC = () => {
                     {item.category}
                   </span>
 
-                  <h3 className="font-editorial font-bold text-lg sm:text-xl text-paper tracking-tight group-hover:text-lav-soft transition-colors">
+                  <h3 className="font-editorial font-semibold text-lg sm:text-xl text-paper tracking-[-0.02em] group-hover:text-lav-soft transition-colors">
                     {item.title}
                   </h3>
 

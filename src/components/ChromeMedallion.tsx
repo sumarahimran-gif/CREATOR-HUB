@@ -28,6 +28,7 @@ export const ChromeMedallion: React.FC<ChromeMedallionProps> = ({
 
   return (
     <div
+      aria-hidden="true"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {

@@ -6,7 +6,7 @@ import { PressFeedbackButton } from './PressFeedbackButton';
 // =========================================================================
 // PRIMARY CTA ("Request Access")
 // - Fully rounded pill (rounded-full), height 52px (56px mobile), padding 0 28px
-// - Font: Syne (font-editorial), 14px, weight 600, tracking 0.04em, normal case
+// - Font: Space Grotesk (font-editorial), 14px, weight 600, tracking 0.04em, normal case
 // - Fill: blue with white text.
 // - 32px circular sand chip with an ink arrow
 // - Soft neutral shadow and inner highlight

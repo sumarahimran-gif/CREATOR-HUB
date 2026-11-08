@@ -144,7 +144,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
       >
         {/* Single H1 for SEO and screen readers, content in DOM from first render */}
         <h1 className="relative flex w-full md:w-max max-w-[92vw] flex-col items-center justify-center gap-2 md:flex-row md:gap-[clamp(16px,2.4vw,48px)] mx-auto">
-          <span className="sr-only">CREATOR HUB</span>
+          <span className="sr-only">Creator Hub – Private YouTube Automation Community</span>
 
           {/* Left Wing: CREATOR (Unfolds with 35ms letter stagger + 3D mouse parallax) */}
           <motion.div
@@ -180,7 +180,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                             ease: EXPO_OUT,
                           }
                     }
-                    className="font-editorial font-black text-[clamp(2.5rem,5vw,7rem)] tracking-tight text-paper leading-[1.1] inline-block select-text"
+                    className="font-editorial font-bold text-[clamp(2.5rem,5.2vw,7rem)] tracking-[-0.02em] text-paper leading-[1.1] inline-block select-text"
                   >
                     {char}
                   </motion.span>
@@ -351,7 +351,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                             ease: EXPO_OUT,
                           }
                     }
-                    className="font-editorial font-black text-[max(2.4rem,calc(clamp(2.5rem,5vw,7rem)-0.9vw))] tracking-tight text-paper leading-[1.1] inline-block select-text"
+                    className="font-editorial font-bold text-[max(2.4rem,calc(clamp(2.5rem,5.2vw,7rem)-0.9vw))] tracking-[-0.02em] text-paper leading-[1.1] inline-block select-text"
                   >
                     {char}
                   </motion.span>
@@ -391,9 +391,12 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
 
         {/* Main Headline revealed LINE BY LINE in overflow-hidden masks (90ms stagger) */}
         <div className="w-full text-center max-w-2xl mx-auto space-y-1 z-20">
-          <h2 className="font-editorial font-bold text-base sm:text-xl md:text-2xl text-paper tracking-tight leading-snug">
-            {/* Line 1 */}
-            <div className="overflow-hidden pb-0.5">
+          <h2 className="font-editorial font-bold text-base sm:text-xl md:text-2xl text-paper tracking-[-0.02em] leading-snug">
+            <span className="sr-only">
+              Build your channel alongside creators who are actively building theirs.
+            </span>
+            {/* Animated lines are decorative; the hidden sentence supplies the heading text. */}
+            <span aria-hidden="true" className="block overflow-hidden pb-0.5">
               <motion.span
                 initial={{ y: '100%', opacity: 0, filter: 'blur(6px)' }}
                 animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
@@ -410,10 +413,9 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
               >
                 Build your channel alongside creators
               </motion.span>
-            </div>
+            </span>
 
-            {/* Line 2 (90ms stagger) */}
-            <div className="overflow-hidden pb-0.5">
+            <span aria-hidden="true" className="block overflow-hidden pb-0.5">
               <motion.span
                 initial={{ y: '100%', opacity: 0, filter: 'blur(6px)' }}
                 animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
@@ -430,7 +432,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
               >
                 who are actively building theirs.
               </motion.span>
-            </div>
+            </span>
           </h2>
 
           {/* Paragraph (y 16 to 0, opacity 0 to 1, blur 6px to 0) */}

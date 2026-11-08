@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useReducedMotion, type Variants } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView, useReducedMotion, type Variants } from 'motion/react';
 
 const getIsMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
 
@@ -15,8 +15,38 @@ export const useIsMobile = () => {
   return isMobile;
 };
 
+const useRevealVisibility = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '0px 0px 18% 0px',
+  });
+  const shouldReduceMotion =
+    useReducedMotion() ??
+    (typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [fallbackVisible, setFallbackVisible] = useState(false);
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setFallbackVisible(true);
+      return;
+    }
+    if (isInView) return;
+
+    const timeout = window.setTimeout(() => setFallbackVisible(true), 1500);
+    return () => window.clearTimeout(timeout);
+  }, [isInView, shouldReduceMotion]);
+
+  return {
+    ref,
+    shouldReduceMotion: Boolean(shouldReduceMotion),
+    isVisible: Boolean(shouldReduceMotion) || isInView || fallbackVisible,
+  };
+};
+
 // =========================================================================
-// 1. REVEAL HEADING (Word-by-word slide-up mask on enter, fade-out on exit)
+// 1. REVEAL HEADING (Word-by-word slide-up on first entry)
 // =========================================================================
 interface RevealHeadingProps {
   text: string;
@@ -31,25 +61,23 @@ export const RevealHeading: React.FC<RevealHeadingProps> = ({
   className = '',
   delay = 0,
 }) => {
-  const shouldReduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
+  const { ref, shouldReduceMotion, isVisible } = useRevealVisibility();
   const words = text.split(' ');
 
   const containerVariants: Variants = {
     hidden: {
-      opacity: 0,
-      filter: shouldReduceMotion || isMobile ? 'none' : 'blur(6px)',
+      opacity: shouldReduceMotion ? 1 : 0,
       transition: {
-        duration: 0.4,
-        ease: [0.4, 0, 1, 1],
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
       },
     },
     visible: {
       opacity: 1,
-      filter: shouldReduceMotion || isMobile ? 'none' : 'blur(0px)',
       transition: {
-        duration: 0.4,
-        staggerChildren: shouldReduceMotion ? 0 : 0.06,
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
+        staggerChildren: shouldReduceMotion ? 0 : 0.04,
         delayChildren: delay,
       },
     },
@@ -57,27 +85,31 @@ export const RevealHeading: React.FC<RevealHeadingProps> = ({
 
   const wordVariants: Variants = {
     hidden: {
-      y: shouldReduceMotion ? '0%' : '105%',
+      y: shouldReduceMotion ? 0 : 16,
+      opacity: shouldReduceMotion ? 1 : 0,
       transition: {
-        duration: 0.35,
-        ease: [0.4, 0, 1, 1],
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
       },
     },
     visible: {
-      y: '0%',
+      y: 0,
+      opacity: 1,
       transition: {
-        duration: 0.75,
-        ease: [0.16, 1, 0.3, 1],
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
       },
     },
   };
 
   return (
     <Component className={className}>
+      <span className="sr-only">{text}</span>
       <motion.span
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.2, margin: '0px 0px -8% 0px' }}
+        ref={ref}
+        aria-hidden="true"
+        initial={shouldReduceMotion ? false : 'hidden'}
+        animate={isVisible ? 'visible' : 'hidden'}
         variants={containerVariants}
         style={{ willChange: 'transform, opacity' }}
         className="inline-block"
@@ -109,7 +141,7 @@ interface RevealItemProps {
   className?: string;
   delay?: number;
   as?: 'div' | 'p' | 'li' | 'span';
-  isCard?: boolean; // Large cards and images: opacity + y only (no blur) to maintain 60fps
+  isCard?: boolean;
 }
 
 export const RevealItem: React.FC<RevealItemProps> = ({
@@ -117,39 +149,35 @@ export const RevealItem: React.FC<RevealItemProps> = ({
   className = '',
   delay = 0,
   as = 'div',
-  isCard = false,
 }) => {
-  const shouldReduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
+  const { ref, shouldReduceMotion, isVisible } = useRevealVisibility();
   const MotionComponent = motion[as] as typeof motion.div;
 
   const itemVariants: Variants = {
     hidden: {
-      opacity: 0,
-      y: shouldReduceMotion ? 0 : 24,
-      filter: shouldReduceMotion || isCard || isMobile ? 'none' : 'blur(8px)',
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 16,
       transition: {
-        duration: 0.45,
-        ease: [0.4, 0, 1, 1], // Leaving is faster than entering
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
       },
     },
     visible: {
       opacity: 1,
       y: 0,
-      filter: shouldReduceMotion || isCard || isMobile ? 'none' : 'blur(0px)',
       transition: {
-        duration: 0.9,
+        duration: shouldReduceMotion ? 0 : 0.5,
         delay,
-        ease: [0.16, 1, 0.3, 1],
+        ease: 'easeOut',
       },
     },
   };
 
   return (
     <MotionComponent
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.2, margin: '0px 0px -8% 0px' }}
+      ref={ref}
+      initial={shouldReduceMotion ? false : 'hidden'}
+      animate={isVisible ? 'visible' : 'hidden'}
       variants={itemVariants}
       style={{ willChange: 'transform, opacity' }}
       className={className}
@@ -175,16 +203,18 @@ export const RevealGroup: React.FC<RevealGroupProps> = ({
   stagger = 0.08,
   delay = 0,
 }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const { ref, shouldReduceMotion, isVisible } = useRevealVisibility();
 
   const containerVariants: Variants = {
     hidden: {
       transition: {
-        staggerChildren: 0, // On exit, all children fade out together with no stagger
+        staggerChildren: 0,
       },
     },
     visible: {
       transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
         staggerChildren: shouldReduceMotion ? 0 : stagger,
         delayChildren: delay,
       },
@@ -193,9 +223,9 @@ export const RevealGroup: React.FC<RevealGroupProps> = ({
 
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.2, margin: '0px 0px -8% 0px' }}
+      ref={ref}
+      initial={shouldReduceMotion ? false : 'hidden'}
+      animate={isVisible ? 'visible' : 'hidden'}
       variants={containerVariants}
       style={{ willChange: 'transform, opacity' }}
       className={className}
@@ -208,44 +238,30 @@ export const RevealGroup: React.FC<RevealGroupProps> = ({
 const prefersReducedMotionCheck = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export const revealChildVariants: Variants = {
-  hidden: () => ({
-    opacity: 0,
-    y: prefersReducedMotionCheck() ? 0 : 24,
-    filter: 'none',
-    transition: {
-      duration: 0.45,
-      ease: [0.4, 0, 1, 1],
-    },
-  }),
-  visible: () => ({
-    opacity: 1,
-    y: 0,
-    filter: 'none',
-    transition: {
-      duration: 0.9,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  }),
-};
+const reducedMotionVariants = (opacity: number, y: number): Variants => ({
+  hidden: () => {
+    const shouldReduceMotion = prefersReducedMotionCheck();
+    return {
+      opacity: shouldReduceMotion ? 1 : opacity,
+      y: shouldReduceMotion ? 0 : y,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
+      },
+    };
+  },
+  visible: () => {
+    const shouldReduceMotion = prefersReducedMotionCheck();
+    return {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: 'easeOut',
+      },
+    };
+  },
+});
 
-export const revealChildTextVariants: Variants = {
-  hidden: () => ({
-    opacity: 0,
-    y: prefersReducedMotionCheck() ? 0 : 24,
-    filter: prefersReducedMotionCheck() || getIsMobile() ? 'none' : 'blur(8px)',
-    transition: {
-      duration: 0.45,
-      ease: [0.4, 0, 1, 1],
-    },
-  }),
-  visible: () => ({
-    opacity: 1,
-    y: 0,
-    filter: prefersReducedMotionCheck() || getIsMobile() ? 'none' : 'blur(0px)',
-    transition: {
-      duration: 0.9,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  }),
-};
+export const revealChildVariants = reducedMotionVariants(0, 16);
+export const revealChildTextVariants = reducedMotionVariants(0, 16);

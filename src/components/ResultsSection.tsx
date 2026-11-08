@@ -73,7 +73,7 @@ export const ResultsSection: React.FC = () => {
           <RevealHeading
             text="Real results from real channels."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15]"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15]"
           />
         </div>
 

@@ -76,7 +76,7 @@ export const AudienceFitSection: React.FC = () => {
           <RevealHeading
             text="Who this community is for — and who it isn't."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-ink tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-ink tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
@@ -95,7 +95,7 @@ export const AudienceFitSection: React.FC = () => {
           <RevealItem delay={0.05} className="border-t-2 border-ink pt-8 space-y-7">
             <div className="flex items-center justify-between border-b border-ink/15 pb-4">
               <div className="space-y-1">
-                <h3 className="font-editorial font-bold text-xl sm:text-2xl text-ink uppercase tracking-tight">
+                <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-ink uppercase tracking-[-0.02em]">
                   This is for you if:
                 </h3>
               </div>
@@ -125,7 +125,7 @@ export const AudienceFitSection: React.FC = () => {
           <RevealItem delay={0.12} className="border-t-2 border-ink/30 pt-8 space-y-7">
             <div className="flex items-center justify-between border-b border-ink/15 pb-4">
               <div className="space-y-1">
-                <h3 className="font-editorial font-bold text-xl sm:text-2xl text-sand-ink uppercase tracking-tight">
+                <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-sand-ink uppercase tracking-[-0.02em]">
                   Not a fit if:
                 </h3>
               </div>

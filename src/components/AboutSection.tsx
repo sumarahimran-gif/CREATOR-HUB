@@ -59,7 +59,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
           <RevealHeading
             text="More than just another course."
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
@@ -83,7 +83,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
             <RevealHeading
               text="The Objective is Straightforward:"
               as="h3"
-              className="font-editorial font-bold text-xl sm:text-2xl text-paper uppercase tracking-tight mt-1"
+              className="font-editorial font-bold text-xl sm:text-2xl text-paper uppercase tracking-[-0.02em] mt-1"
             />
           </div>
 
@@ -98,7 +98,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
                   className="border-t border-ink-3 pt-6 space-y-4 group hover:border-lav/50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-editorial font-black text-2xl text-paper-dim group-hover:text-lav transition-colors">
+                    <span className="font-editorial font-bold text-2xl text-paper-dim group-hover:text-lav transition-colors">
                       {item.step}
                     </span>
                     <Icon className="w-4 h-4 text-paper-dim group-hover:text-lav transition-colors" />
@@ -108,7 +108,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
                     <span className="text-xs sm:text-sm font-tech text-lav uppercase tracking-wider block transition-colors">
                       Step {item.step} // {item.action}
                     </span>
-                    <h4 className="font-editorial font-bold text-base sm:text-lg text-paper">
+                    <h4 className="font-editorial font-semibold text-base sm:text-lg text-paper">
                       {item.focus}
                     </h4>
                   </div>

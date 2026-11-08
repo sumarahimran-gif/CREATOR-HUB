@@ -165,7 +165,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <span className="text-xs font-tech uppercase tracking-[0.25em] text-lav block font-medium">
                   Admissions Application
                 </span>
-                <h3 id="modal-title" className="font-editorial font-bold text-2xl sm:text-3xl text-paper tracking-tight">
+                <h3 id="modal-title" className="font-editorial font-semibold text-2xl sm:text-3xl text-paper tracking-[-0.02em]">
                   Request Creator Hub Access
                 </h3>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs text-paper-dim font-sans">
@@ -217,7 +217,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <span className="text-xs font-tech uppercase tracking-[0.25em] text-lav block font-medium">
                   Direct Inquiries
                 </span>
-                <h3 id="modal-title" className="font-editorial font-bold text-2xl sm:text-3xl text-paper tracking-tight">
+                <h3 id="modal-title" className="font-editorial font-semibold text-2xl sm:text-3xl text-paper tracking-[-0.02em]">
                   Contact Our Team
                 </h3>
                 <p className="text-sm text-paper-dim font-sans leading-relaxed">
@@ -300,7 +300,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <span className="text-xs font-tech uppercase tracking-[0.25em] text-lav block font-medium">
                   Legal Policies
                 </span>
-                <h3 id="modal-title" className="font-editorial font-bold text-2xl text-paper">
+                <h3 id="modal-title" className="font-editorial font-semibold text-2xl text-paper">
                   Terms & Conditions
                 </h3>
               </div>
@@ -308,19 +308,19 @@ export const Modals: React.FC<ModalsProps> = ({
                 <p>
                   Welcome to Creator Hub. By accessing or enrolling in Creator Hub, you agree to comply with and be bound by the following terms and conditions.
                 </p>
-                <h4 className="font-bold text-paper uppercase text-xs font-tech pt-2">
+                <h4 className="font-semibold text-paper uppercase text-xs font-tech pt-2">
                   1. Educational Nature of Community
                 </h4>
                 <p>
                   Creator Hub is a structured digital community providing educational resources, production frameworks, and peer networking. It does not constitute investment, financial, or legal counsel.
                 </p>
-                <h4 className="font-bold text-paper uppercase text-xs font-tech pt-2">
+                <h4 className="font-semibold text-paper uppercase text-xs font-tech pt-2">
                   2. Individual License & Intellectual Property
                 </h4>
                 <p>
                   All proprietary Standard Operating Procedures (SOPs), templates, guidelines, and curriculum provided within Creator Hub are protected intellectual property. Access is licensed strictly to a single individual. Unauthorized sharing, reproduction, or distribution results in immediate revocation of access without refund.
                 </p>
-                <h4 className="font-bold text-paper uppercase text-xs font-tech pt-2">
+                <h4 className="font-semibold text-paper uppercase text-xs font-tech pt-2">
                   3. Conduct & Community Rules
                 </h4>
                 <p>
@@ -337,7 +337,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <span className="text-xs font-tech uppercase tracking-[0.25em] text-lav block font-medium">
                   Privacy & Security
                 </span>
-                <h3 id="modal-title" className="font-editorial font-bold text-2xl text-paper">
+                <h3 id="modal-title" className="font-editorial font-semibold text-2xl text-paper">
                   Privacy Policy
                 </h3>
               </div>
@@ -345,19 +345,19 @@ export const Modals: React.FC<ModalsProps> = ({
                 <p>
                   Creator Hub is committed to protecting your personal information. This Privacy Policy describes how we collect, use, and protect your information when you apply or join.
                 </p>
-                <h4 className="font-bold text-paper uppercase text-xs font-tech pt-2">
+                <h4 className="font-semibold text-paper uppercase text-xs font-tech pt-2">
                   1. Information Collected
                 </h4>
                 <p>
                   We collect information provided during application and checkout, including your name, email address, social handles, and channel information, solely to administer your membership.
                 </p>
-                <h4 className="font-bold text-paper uppercase text-xs font-tech pt-2">
+                <h4 className="font-semibold text-paper uppercase text-xs font-tech pt-2">
                   2. Payment Security
                 </h4>
                 <p>
                   Payment processing is handled securely by Razorpay. We do not store or process your sensitive credit/debit card details or banking credentials on our servers.
                 </p>
-                <h4 className="font-bold text-paper uppercase text-xs font-tech pt-2">
+                <h4 className="font-semibold text-paper uppercase text-xs font-tech pt-2">
                   3. Data Sharing
                 </h4>
                 <p>
@@ -374,7 +374,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <span className="text-xs font-tech uppercase tracking-[0.25em] text-lav block font-medium">
                   Commerce Policy
                 </span>
-                <h3 id="modal-title" className="font-editorial font-bold text-2xl text-paper">
+                <h3 id="modal-title" className="font-editorial font-semibold text-2xl text-paper">
                   Return & Refund Policy
                 </h3>
               </div>

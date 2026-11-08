@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Volume2, VolumeX, Menu, X } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { RequestAccessPill } from './RequestAccessPill';
@@ -26,6 +26,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const shouldReduceMotion =
+    useReducedMotion() ??
+    (typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const menuButtonRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const wasMenuOpen = useRef(false);
+  const shouldRestoreMenuFocus = useRef(true);
 
   const navLinks = [
     { label: 'About', href: '#about' },
@@ -35,6 +44,77 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 8);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      if (wasMenuOpen.current) {
+        const menuButton = menuButtonRef.current?.querySelector<HTMLButtonElement>('button');
+        if (shouldRestoreMenuFocus.current && menuButton?.offsetParent !== null) {
+          menuButton?.focus();
+        }
+        shouldRestoreMenuFocus.current = true;
+        wasMenuOpen.current = false;
+      }
+      return;
+    }
+
+    wasMenuOpen.current = true;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    drawerRef.current?.querySelector<HTMLElement>('button, a[href]')?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMobileMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !drawerRef.current) return;
+      const focusable = Array.from(
+        drawerRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => element.offsetParent !== null);
+      if (focusable.length === 0) {
+        event.preventDefault();
+        drawerRef.current.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!drawerRef.current.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setMobileMenuOpen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const sections = navLinks
@@ -108,11 +188,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
+    <>
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-40 bg-ink/90 backdrop-blur-md border-b border-ink-3 transition-colors duration-300 lg:h-[88px]"
+      className={`fixed top-0 left-0 right-0 z-40 border-b transition-[background-color,backdrop-filter,border-color] duration-[250ms] ease-out lg:h-[88px] ${
+        isScrolled
+          ? 'bg-[rgba(11,12,14,0.72)] backdrop-blur-[12px] border-line'
+          : 'bg-transparent backdrop-blur-none border-transparent'
+      }`}
     >
       <div className="mx-auto flex h-20 w-full max-w-[1920px] items-center justify-between gap-3 px-4 sm:px-8 lg:h-[88px] lg:gap-3 lg:px-4 xl:gap-4 xl:px-8">
         
@@ -180,7 +265,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <motion.span
                     layoutId="activeNavIndicator"
                     className="absolute bottom-0 left-0 right-0 h-[2px] bg-lav"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
                   />
                 )}
               </PressFeedbackLink>
@@ -214,34 +301,70 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Menu Hamburger (44px x 44px, fully rounded-full, 8% white bg, 10% border, paper-dim icon) */}
-          <PressFeedbackButton
-            size="sm"
-            onClick={() => {
-              soundFx.playTick();
-              setMobileMenuOpen(!mobileMenuOpen);
-            }}
-            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-paper-dim transition-colors hover:bg-white/[0.14] hover:text-white lg:hidden cursor-pointer outline-none"
-            aria-label="Toggle Navigation Menu"
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5" />}
-          </PressFeedbackButton>
+          <div className="lg:hidden" ref={menuButtonRef}>
+            <PressFeedbackButton
+              size="sm"
+              onClick={() => {
+                soundFx.playTick();
+                setMobileMenuOpen((isOpen) => !isOpen);
+              }}
+              className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-paper-dim transition-colors hover:bg-white/[0.14] hover:text-white cursor-pointer outline-none"
+              aria-label="Toggle Navigation Menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls={mobileMenuOpen ? 'mobile-menu' : undefined}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5" />}
+            </PressFeedbackButton>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
+    </motion.header>
+    <AnimatePresence>
+      {mobileMenuOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 lg:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setMobileMenuOpen(false);
+          }}
+        >
+          <div
+            className="absolute inset-0 bg-black/60"
+            aria-hidden="true"
+            onClick={() => setMobileMenuOpen(false)}
+          />
           <motion.div
+            ref={drawerRef}
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden bg-ink-2 border-b border-ink-3 px-5 py-6 space-y-4 shadow-2xl overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            tabIndex={-1}
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+            className="absolute right-0 top-0 flex h-full w-[min(88vw,24rem)] flex-col overflow-y-auto border-l border-ink-3 bg-ink-2 px-5 pb-6 pt-5 shadow-2xl"
           >
-            <div className="flex flex-col space-y-1">
+            <div className="mb-4 flex min-h-12 items-center justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  soundFx.playTick();
+                  setMobileMenuOpen(false);
+                }}
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-paper-dim transition-colors hover:bg-white/[0.14] hover:text-white"
+                aria-label="Close Navigation Menu"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <nav className="flex flex-col" aria-label="Mobile Navigation">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href;
                 return (
@@ -249,34 +372,43 @@ export const Navbar: React.FC<NavbarProps> = ({
                     origin="center"
                     key={link.label}
                     href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={`px-4 py-3 text-sm font-tech uppercase tracking-widest transition-colors border-b border-ink-3 ${
-                      isActive ? 'text-lav font-bold' : 'text-paper-dim hover:text-paper'
+                    onClick={(event) => handleNavClick(event, link.href)}
+                    className={`relative flex min-h-12 items-center border-b border-ink-3 px-4 py-3 text-sm font-tech uppercase tracking-widest transition-colors ${
+                      isActive ? 'font-bold text-lav' : 'text-paper-dim hover:text-paper'
                     }`}
                   >
                     {link.label}
+                    {isActive && (
+                      <motion.span
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        className="absolute bottom-0 left-4 right-4 h-[2px] origin-left bg-lav"
+                        transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+                      />
+                    )}
                   </PressFeedbackLink>
                 );
               })}
-            </div>
+            </nav>
 
-            <div className="pt-2 flex flex-col gap-3">
+            <div className="mt-5 flex flex-col gap-3">
               <PressFeedbackButton
                 size="lg"
                 type="button"
                 onClick={() => {
                   soundFx.playTick();
+                  shouldRestoreMenuFocus.current = false;
                   setMobileMenuOpen(false);
                   onOpenContact();
                 }}
-                className="w-full h-[48px] rounded-full bg-white/[0.08] border border-white/10 text-paper-dim hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center transition-colors cursor-pointer"
+                className="h-12 w-full rounded-full border border-white/10 bg-white/[0.08] text-paper-dim transition-colors hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center cursor-pointer"
               >
                 Ask a Question →
               </PressFeedbackButton>
 
-              {/* Full width 54px pill with arrow chip on right */}
               <RequestAccessPill
                 onClick={() => {
+                  shouldRestoreMenuFocus.current = false;
                   setMobileMenuOpen(false);
                   onOpenApply();
                 }}
@@ -284,8 +416,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               />
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 };

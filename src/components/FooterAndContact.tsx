@@ -66,7 +66,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
                     Have Questions?
                   </span>
 
-                  <h3 className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase">
+                  <h3 className="font-editorial font-semibold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase">
                     Speak with us before joining.
                   </h3>
 
@@ -125,7 +125,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
           <RevealHeading
             text="Ready to start building?"
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>

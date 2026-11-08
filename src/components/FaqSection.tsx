@@ -112,7 +112,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
           <RevealHeading
             text="Frequently Asked Questions"
             as="h2"
-            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-tight leading-[1.15] uppercase"
+            className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
           <RevealItem delay={0.1}>
