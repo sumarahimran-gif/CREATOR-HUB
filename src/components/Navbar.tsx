@@ -103,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const el = document.querySelector(href);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   };
 
@@ -125,12 +125,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={(e) => {
               e.preventDefault();
               soundFx.playTick();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.scrollTo({ top: 0, behavior: 'auto' });
               if (onLogoClick) onLogoClick();
             }}
-            className="group relative flex cursor-pointer items-center gap-3 whitespace-nowrap p-1 outline-none focus-visible:ring-1 focus-visible:ring-lav"
+            className="group relative flex cursor-pointer items-center gap-3 whitespace-nowrap p-1 outline-none"
           >
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-lav/40 bg-ink-2 p-0.5 shadow-[0_0_15px_rgba(184,164,244,0.3)] transition-all group-hover:border-lav group-hover:shadow-[0_0_25px_rgba(184,164,244,0.6)] xl:h-[52px] xl:w-[52px]">
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-lav/40 bg-ink-2 p-0.5 shadow-[0_0_15px_color-mix(in_srgb,var(--color-lav)_30%,transparent)] transition-all group-hover:border-lav group-hover:shadow-[0_0_25px_color-mix(in_srgb,var(--color-lav)_60%,transparent)] xl:h-[52px] xl:w-[52px]">
               {/* Soft Ambient Lavender Halo */}
               <div className="absolute -inset-1 rounded-full bg-lav/15 blur-[6px] pointer-events-none group-hover:bg-lav/30 transition-all" />
 
@@ -172,14 +172,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`relative shrink-0 whitespace-nowrap py-2 font-tech text-[11px] uppercase tracking-[0.14em] transition-colors 2xl:text-xs ${
                   isActive
                     ? 'font-bold text-white'
-                    : 'text-[#B9B5C9] hover:text-white'
+                    : 'text-paper-dim hover:text-white'
                 }`}
               >
                 {link.label}
                 {isActive && (
                   <motion.span
                     layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B8A4F4]"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-lav"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -190,18 +190,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Action Buttons with exact 10px spacing and rounded-full pill styling */}
         <div className="flex shrink-0 items-center gap-[10px] lg:gap-2 xl:gap-3">
-          {/* Sound Synthesizer Toggle (44px x 44px, fully rounded-full, 8% white bg, 10% border, #B9B5C9 icon) */}
+          {/* Sound Synthesizer Toggle (44px x 44px, fully rounded-full, 8% white bg, 10% border, paper-dim icon) */}
           <PressFeedbackButton
             size="sm"
             onClick={onToggleSound}
-            className="w-[44px] h-[44px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
+            className="w-[44px] h-[44px] rounded-full bg-white/[0.08] border border-white/10 text-paper-dim hover:bg-white/[0.14] hover:text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer outline-none"
             title={soundEnabled ? 'Disable Tactile Sound FX' : 'Enable Tactile Sound FX'}
             aria-label="Toggle Sound Effects"
           >
             {soundEnabled ? (
               <Volume2 className="w-4 h-4 text-lav" />
             ) : (
-              <VolumeX className="w-4 h-4 text-[#B9B5C9]" />
+              <VolumeX className="w-4 h-4 text-paper-dim" />
             )}
           </PressFeedbackButton>
 
@@ -213,14 +213,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             <RequestAccessPill onClick={onOpenApply} size="mobile" />
           </div>
 
-          {/* Mobile Menu Hamburger (44px x 44px, fully rounded-full, 8% white bg, 10% border, #B9B5C9 icon) */}
+          {/* Mobile Menu Hamburger (44px x 44px, fully rounded-full, 8% white bg, 10% border, paper-dim icon) */}
           <PressFeedbackButton
             size="sm"
             onClick={() => {
               soundFx.playTick();
               setMobileMenuOpen(!mobileMenuOpen);
             }}
-            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-[#B9B5C9] transition-colors hover:bg-white/[0.14] hover:text-white lg:hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
+            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-paper-dim transition-colors hover:bg-white/[0.14] hover:text-white lg:hidden cursor-pointer outline-none"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -269,7 +269,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenContact();
                 }}
-                className="w-full h-[48px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center transition-colors cursor-pointer"
+                className="w-full h-[48px] rounded-full bg-white/[0.08] border border-white/10 text-paper-dim hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center transition-colors cursor-pointer"
               >
                 Ask a Question →
               </PressFeedbackButton>

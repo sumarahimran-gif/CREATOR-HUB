@@ -94,7 +94,7 @@ export const ResultsSection: React.FC = () => {
                 type="button"
                 onClick={() => openImage(image)}
                 aria-label={`Open image: ${image.caption}`}
-                className="flex min-h-[220px] w-full flex-1 cursor-zoom-in items-center justify-center rounded-xl bg-ink p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lav"
+                className="flex min-h-[220px] w-full flex-1 cursor-zoom-in items-center justify-center rounded-xl bg-ink p-3 focus-visible:outline-none"
               >
                 <img
                   src={image.src}

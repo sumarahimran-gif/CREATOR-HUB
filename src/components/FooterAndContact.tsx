@@ -25,7 +25,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
 }) => {
   const scrollToTop = () => {
     soundFx.playTick();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   const navLinks = [
@@ -46,7 +46,7 @@ export const FooterAndContact: React.FC<FooterAndContactProps> = ({
       window.location.hash = href;
     }
     const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: 'auto' });
   };
 
   return (

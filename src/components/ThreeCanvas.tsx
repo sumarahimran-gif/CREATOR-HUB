@@ -38,7 +38,14 @@ export const ThreeCanvas: React.FC = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
-    // 3. Studio Lighting (White and Lavender)
+    const palette = getComputedStyle(document.documentElement);
+    const blueHex = palette.getPropertyValue('--color-lav').trim();
+    const blueSoftHex = palette.getPropertyValue('--color-lav-soft').trim();
+    const blueMatch = /^#([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(blueHex);
+    if (!blueMatch) throw new Error(`Invalid --color-lav token: ${blueHex}`);
+    const blueRgba = `rgba(${parseInt(blueMatch[1], 16)}, ${parseInt(blueMatch[2], 16)}, ${parseInt(blueMatch[3], 16)}, 0.3)`;
+
+    // 3. Studio Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
 
@@ -46,19 +53,19 @@ export const ThreeCanvas: React.FC = () => {
     keyLight.position.set(12, 18, 20);
     scene.add(keyLight);
 
-    const lavenderLight = new THREE.DirectionalLight(0xb8a4f4, 0.85); // Pure brand lavender
-    lavenderLight.position.set(-15, -10, 10);
-    scene.add(lavenderLight);
+    const blueLight = new THREE.DirectionalLight(new THREE.Color(blueHex), 0.85);
+    blueLight.position.set(-15, -10, 10);
+    scene.add(blueLight);
 
-    // 4. White and Lavender Particles
+    // 4. White and blue particles
     const particleCount = 75;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
     const cWhite = new THREE.Color(0xffffff);
-    const cLavSoft = new THREE.Color(0xdcd2fb);
-    const cLav = new THREE.Color(0xb8a4f4);
+    const cBlueSoft = new THREE.Color(blueSoftHex);
+    const cBlue = new THREE.Color(blueHex);
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 50;
@@ -66,7 +73,7 @@ export const ThreeCanvas: React.FC = () => {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 25;
 
       const rnd = Math.random();
-      const col = rnd < 0.35 ? cLav : rnd < 0.7 ? cLavSoft : cWhite;
+      const col = rnd < 0.35 ? cBlue : rnd < 0.7 ? cBlueSoft : cWhite;
       colors[i * 3] = col.r;
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
@@ -83,7 +90,7 @@ export const ThreeCanvas: React.FC = () => {
     if (ctx) {
       const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
       grad.addColorStop(0, 'rgba(255,255,255,0.85)');
-      grad.addColorStop(0.5, 'rgba(184,164,244,0.3)');
+      grad.addColorStop(0.5, blueRgba);
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 16, 16);
@@ -103,10 +110,10 @@ export const ThreeCanvas: React.FC = () => {
     const particles = new THREE.Points(geometry, pMaterial);
     scene.add(particles);
 
-    // 5. Delicate orbital ring in brand lavender
+    // 5. Delicate orbital ring in brand blue
     const ringGeo = new THREE.TorusGeometry(12, 0.03, 16, 100);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xb8a4f4,
+      color: new THREE.Color(blueHex),
       transparent: true,
       opacity: 0.15,
     });

@@ -149,7 +149,7 @@ export const ImageViewerProvider: React.FC<React.PropsWithChildren> = ({ childre
             type="button"
             onClick={closeImage}
             aria-label="Back to website"
-            className="fixed z-[111] flex h-11 items-center gap-2 rounded-full border border-white/[0.15] bg-white/[0.12] px-[14px] text-[13px] font-medium text-white backdrop-blur-md transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            className="fixed z-[111] flex h-11 items-center gap-2 rounded-full border border-white/[0.15] bg-white/[0.12] px-[14px] text-[13px] font-medium text-white backdrop-blur-md transition-colors hover:bg-white/20"
             style={{
               top: 'calc(16px + env(safe-area-inset-top))',
               left: 'calc(16px + env(safe-area-inset-left))',
@@ -163,7 +163,7 @@ export const ImageViewerProvider: React.FC<React.PropsWithChildren> = ({ childre
             type="button"
             onClick={closeImage}
             aria-label="Close image viewer"
-            className="fixed z-[111] flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.15] bg-white/[0.12] text-white backdrop-blur-md transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            className="fixed z-[111] flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.15] bg-white/[0.12] text-white backdrop-blur-md transition-colors hover:bg-white/20"
             style={{
               top: 'calc(16px + env(safe-area-inset-top))',
               right: 'calc(16px + env(safe-area-inset-right))',

@@ -64,15 +64,17 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
     };
   }, [shouldReduceMotion]);
 
-  // Handle medallion click: tactile sound + lavender shockwave ripple
+  // Handle medallion click: tactile sound + blue shockwave ripple
   const handleMedallionClick = () => {
     soundFx.playAction();
-    setShockwave(true);
-    setLogoPulse(true);
-    setTimeout(() => {
-      setShockwave(false);
-      setLogoPulse(false);
-    }, 850);
+    if (!shouldReduceMotion) {
+      setShockwave(true);
+      setLogoPulse(true);
+      setTimeout(() => {
+        setShockwave(false);
+        setLogoPulse(false);
+      }, 850);
+    }
     openImage({ src: logoSrc, alt: 'Creator Hub chrome medallion logo', width: 500, height: 500 });
     if (onLogoClick) onLogoClick();
   };
@@ -81,9 +83,9 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
     soundFx.playTick();
     const aboutSection = document.querySelector('#about');
     if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
+      aboutSection.scrollIntoView({ behavior: shouldReduceMotion ? 'auto' : 'smooth' });
     } else {
-      window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+      window.scrollBy({ top: window.innerHeight * 0.9, behavior: shouldReduceMotion ? 'auto' : 'smooth' });
     }
   };
 
@@ -259,7 +261,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                       handleMedallionClick();
                     }
                   }}
-                  className="cursor-pointer group relative flex flex-col items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-lav p-1"
+                  className="cursor-pointer group relative flex flex-col items-center justify-center rounded-full outline-none p-1"
                   title="Creator Hub Medallion — Click to interact"
                   aria-label="Creator Hub Medallion"
                 >
@@ -270,7 +272,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                         initial={{ scale: 0.85, opacity: 0.95 }}
                         animate={{ scale: 2.8, opacity: 0 }}
                         transition={{ duration: 0.85, ease: EXPO_OUT }}
-                        className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_0_50px_rgba(184,164,244,0.9)] pointer-events-none z-30"
+                        className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_0_50px_color-mix(in_srgb,var(--color-lav)_90%,transparent)] pointer-events-none z-30"
                       />
                       <motion.span
                         initial={{ scale: 0.9, opacity: 0.8 }}
@@ -287,7 +289,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                       initial={{ scale: 0.85, opacity: 0.95 }}
                       animate={{ scale: 1.7, opacity: 0 }}
                       transition={{ duration: 0.65, ease: EXPO_OUT }}
-                      className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_0_40px_rgba(184,164,244,0.85)] pointer-events-none z-30"
+                      className="absolute inset-0 rounded-full border-2 border-lav shadow-[0_0_40px_color-mix(in_srgb,var(--color-lav)_85%,transparent)] pointer-events-none z-30"
                     />
                   )}
 
@@ -532,7 +534,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
           type="button"
           aria-label="Scroll to explore"
           onClick={handleScrollCueClick}
-          className="flex flex-col items-center gap-1 cursor-pointer group bg-transparent border-none p-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-lav"
+          className="flex flex-col items-center gap-1 cursor-pointer group bg-transparent border-none p-1 focus:outline-none"
         >
           <span className="text-[10px] font-tech tracking-[0.3em] text-paper-dim group-hover:text-lav uppercase transition-colors">
             Scroll

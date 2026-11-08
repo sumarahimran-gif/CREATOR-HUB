@@ -18,7 +18,7 @@ export const ScrollProgressBar: React.FC = () => {
     >
       {/* Active Scroll Depth Indicator (z-index 30, lower than z-50 modals) */}
       <motion.div
-        className="h-full w-full bg-lav transform-gpu origin-left shadow-[0_0_12px_rgba(184,164,244,0.6)]"
+        className="h-full w-full bg-lav transform-gpu origin-left shadow-[0_0_12px_color-mix(in_srgb,var(--color-lav)_60%,transparent)]"
         style={{ scaleX }}
       />
     </div>

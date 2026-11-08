@@ -144,7 +144,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${index}`}
                     onClick={() => toggleFaq(index)}
-                    className="w-full py-6 sm:py-7 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-lav group"
+                    className="w-full py-6 sm:py-7 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none group"
                   >
                     <span className={`font-editorial font-bold text-lg sm:text-xl tracking-tight pr-4 transition-colors ${isOpen ? 'text-lav-soft' : 'text-paper group-hover:text-paper-dim'}`}>
                       {faq.question}

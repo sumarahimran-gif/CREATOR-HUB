@@ -38,12 +38,12 @@ export const ChromeMedallion: React.FC<ChromeMedallionProps> = ({
       className={`relative inline-flex items-center justify-center select-none ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* 1. Subtle, disciplined ambient backlight with lavender aura */}
+      {/* 1. Subtle, disciplined ambient blue backlight */}
       <div
         className="absolute -inset-6 rounded-full blur-2xl pointer-events-none transition-opacity duration-500"
         style={{
           opacity: isHovered ? 0.45 : 0.22,
-          background: 'radial-gradient(circle, rgba(184, 164, 244, 0.45) 0%, rgba(139, 111, 232, 0.18) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, color-mix(in srgb, var(--color-lav) 45%, transparent) 0%, color-mix(in srgb, var(--color-lav-deep) 18%, transparent) 40%, transparent 70%)',
         }}
       />
 
@@ -71,7 +71,7 @@ export const ChromeMedallion: React.FC<ChromeMedallionProps> = ({
             opacity: isHovered ? 0.28 : 0.08,
             background: `radial-gradient(circle at ${50 + hoverPos.x * 35}% ${
               50 + hoverPos.y * 35
-            }%, rgba(246, 244, 251, 0.8) 0%, rgba(246, 244, 251, 0) 60%)`,
+            }%, color-mix(in srgb, var(--color-paper) 80%, transparent) 0%, transparent 60%)`,
           }}
         />
       </div>

@@ -152,7 +152,7 @@ export const Modals: React.FC<ModalsProps> = ({
             size="sm"
             type="button"
             onClick={resetAndClose}
-            className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 text-paper-dim hover:text-paper hover:bg-ink-3/80 transition-colors border border-ink-3 bg-ink cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-lav z-20"
+            className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 text-paper-dim hover:text-paper hover:bg-ink-3/80 transition-colors border border-ink-3 bg-ink cursor-pointer focus:outline-none z-20"
             aria-label="Close modal"
           >
             <X className="w-4 h-4" />

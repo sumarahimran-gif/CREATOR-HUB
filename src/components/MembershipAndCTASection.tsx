@@ -47,7 +47,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
 
           <RevealItem delay={0.1}>
             <div className="border-l border-ink/20 pl-5 py-1">
-              <p className="text-sm sm:text-base text-ink/75 font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-sand-ink font-sans leading-relaxed">
                 A unified private environment built for continuous execution and peer collaboration.
               </p>
             </div>
@@ -56,13 +56,13 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
 
         {/* Minimal High-Contrast Membership Panel (Light Architectural Surface) */}
         <RevealItem delay={0.1}>
-          <div className="border border-ink/15 bg-white p-8 sm:p-12 lg:p-14 shadow-lg hover:border-ink/30 transition-colors">
+          <div className="border border-ink/15 bg-paper p-8 sm:p-12 lg:p-14 shadow-lg hover:border-ink/30 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               
               {/* Left Column: Details & Inclusions */}
               <div className="lg:col-span-7 space-y-6">
                 <div className="space-y-2">
-                  <span className="text-xs sm:text-sm font-tech text-ink/70 uppercase tracking-widest block font-medium">
+                  <span className="text-xs sm:text-sm font-tech text-sand-ink uppercase tracking-widest block font-medium">
                     All-Inclusive Membership
                   </span>
                   <h3 className="font-editorial font-bold text-xl sm:text-2xl text-ink uppercase tracking-tight">
@@ -72,17 +72,17 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
 
                 <div className="space-y-4 pt-3">
                   {inclusions.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3.5 text-base text-ink/85 font-sans leading-relaxed group">
+                    <div key={idx} className="flex items-start gap-3.5 text-base text-sand-ink font-sans leading-relaxed group">
                       <div className="w-5 h-5 rounded-sm bg-ink text-paper flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="w-3.5 h-3.5" />
                       </div>
-                      <span className="text-ink/85 group-hover:text-ink transition-colors">{item}</span>
+                      <span className="text-sand-ink group-hover:text-ink transition-colors">{item}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="pt-5 border-t border-ink/10">
-                  <p className="text-sm text-ink/60 font-sans italic">
+                  <p className="text-sm text-sand-ink font-sans italic">
                     Digital access only. No physical products are shipped.
                   </p>
                 </div>
@@ -91,7 +91,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
               {/* Right Column: Direct CTA & What It Costs */}
               <div className="lg:col-span-5 p-8 sm:p-10 border border-ink/15 bg-paper space-y-6 flex flex-col justify-between">
                 <div className="space-y-3.5">
-                  <div className="flex items-center justify-between text-xs sm:text-sm font-tech uppercase tracking-widest text-ink/60 border-b border-ink/10 pb-3.5">
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-tech uppercase tracking-widest text-sand-ink border-b border-ink/10 pb-3.5">
                     <span>Admissions</span>
                     <span className="text-ink font-semibold">Limited Intake</span>
                   </div>
@@ -100,14 +100,14 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                     <h4 className="font-editorial font-bold text-xl text-ink uppercase tracking-tight">
                       Private Admissions
                     </h4>
-                    <p className="text-base text-ink/75 font-sans leading-relaxed">
+                    <p className="text-base text-sand-ink font-sans leading-relaxed">
                       Access is granted upon review to ensure mutual alignment with our community standards and execution pace.
                     </p>
                   </div>
 
                   {/* "What it costs" line near Membership CTA */}
-                  <div className="p-3.5 border border-ink/15 bg-white/70 space-y-1">
-                    <span className="text-xs font-tech text-ink/60 uppercase tracking-wider block">
+                  <div className="p-3.5 border border-ink/15 bg-paper/70 space-y-1">
+                    <span className="text-xs font-tech text-sand-ink uppercase tracking-wider block">
                       What it costs
                     </span>
                     <p className="text-sm font-sans font-medium text-ink">
@@ -132,7 +132,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                   />
                 </div>
 
-                <div className="pt-3.5 border-t border-ink/10 text-xs font-sans text-ink/65 flex items-center gap-2">
+                <div className="pt-3.5 border-t border-ink/10 text-xs font-sans text-sand-ink flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-ink shrink-0" />
                   <span>Private Community Membership</span>
                 </div>

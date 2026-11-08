@@ -81,7 +81,7 @@ export const AudienceFitSection: React.FC = () => {
 
           <RevealItem delay={0.1}>
             <div className="border-l border-ink/20 pl-5 py-1">
-              <p className="text-sm sm:text-base text-ink/75 font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-sand-ink font-sans leading-relaxed">
                 Mutual alignment ensures a focused, action-oriented environment for everyone involved.
               </p>
             </div>
@@ -104,7 +104,7 @@ export const AudienceFitSection: React.FC = () => {
 
             <ul className="space-y-5 pt-2">
               {forYouList.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3.5 text-base text-ink/85 font-sans leading-relaxed group">
+                <li key={idx} className="flex items-start gap-3.5 text-base text-sand-ink font-sans leading-relaxed group">
                   <div className="w-5 h-5 rounded-sm bg-ink text-paper flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3.5 h-3.5" />
                   </div>
@@ -112,7 +112,7 @@ export const AudienceFitSection: React.FC = () => {
                     <span className="font-tech text-ink font-bold text-sm mr-2">
                       [{item.highlight}]
                     </span>
-                    <span className="text-ink/80 text-base">
+                    <span className="text-sand-ink text-base">
                       {item.text}
                     </span>
                   </div>
@@ -125,7 +125,7 @@ export const AudienceFitSection: React.FC = () => {
           <RevealItem delay={0.12} className="border-t-2 border-ink/30 pt-8 space-y-7">
             <div className="flex items-center justify-between border-b border-ink/15 pb-4">
               <div className="space-y-1">
-                <h3 className="font-editorial font-bold text-xl sm:text-2xl text-ink/70 uppercase tracking-tight">
+                <h3 className="font-editorial font-bold text-xl sm:text-2xl text-sand-ink uppercase tracking-tight">
                   Not a fit if:
                 </h3>
               </div>
@@ -134,15 +134,15 @@ export const AudienceFitSection: React.FC = () => {
 
             <ul className="space-y-5 pt-2">
               {notForYouList.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3.5 text-base text-ink/70 font-sans leading-relaxed">
-                  <div className="w-5 h-5 rounded-sm border border-ink/30 bg-ink/5 text-ink/60 flex items-center justify-center shrink-0 mt-0.5">
+                <li key={idx} className="flex items-start gap-3.5 text-base text-sand-ink font-sans leading-relaxed">
+                  <div className="w-5 h-5 rounded-sm border border-ink/30 bg-ink/5 text-sand-ink flex items-center justify-center shrink-0 mt-0.5">
                     <X className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <span className="font-tech text-ink/70 font-bold text-sm mr-2">
+                    <span className="font-tech text-sand-ink font-bold text-sm mr-2">
                       [{item.highlight}]
                     </span>
-                    <span className="text-ink/65 text-base">
+                    <span className="text-sand-ink text-base">
                       {item.text}
                     </span>
                   </div>
