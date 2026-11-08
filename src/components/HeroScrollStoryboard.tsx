@@ -113,7 +113,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="hero-section relative h-[100svh] min-h-[100svh] w-full bg-ink text-paper flex flex-col items-center justify-center gap-[clamp(16px,3.2vh,48px)] px-4 sm:px-8 lg:px-14 pt-[104px] pb-2 overflow-hidden perspective-1000"
+      className="hero-section relative min-h-[100svh] w-full bg-ink text-paper flex flex-col items-center justify-center gap-[clamp(16px,3.2vh,48px)] px-4 sm:px-8 lg:px-14 pt-28 sm:pt-32 pb-2 overflow-hidden perspective-1000"
     >
       {/* 1. Three.js Background Canvas with Interactive Mouse Particle Parallax */}
       <ThreeCanvas />
@@ -178,7 +178,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                             ease: EXPO_OUT,
                           }
                     }
-                    className="font-editorial font-black text-[clamp(2.5rem,5.4vw,7rem)] tracking-tight text-paper leading-none inline-block select-text"
+                    className="font-editorial font-black text-[clamp(2.5rem,5vw,7rem)] tracking-tight text-paper leading-[1.1] inline-block select-text"
                   >
                     {char}
                   </motion.span>
@@ -349,7 +349,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                             ease: EXPO_OUT,
                           }
                     }
-                    className="font-editorial font-black text-[max(2.4rem,calc(clamp(2.5rem,5.4vw,7rem)-0.9vw))] tracking-tight text-paper leading-none inline-block select-text"
+                    className="font-editorial font-black text-[max(2.4rem,calc(clamp(2.5rem,5vw,7rem)-0.9vw))] tracking-tight text-paper leading-[1.1] inline-block select-text"
                   >
                     {char}
                   </motion.span>
