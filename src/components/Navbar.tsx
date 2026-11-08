@@ -190,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <PressFeedbackButton
             size="sm"
             onClick={onToggleSound}
-            className="w-[44px] h-[44px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white flex items-center justify-center shrink-0 transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
+            className="w-[44px] h-[44px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
             title={soundEnabled ? 'Disable Tactile Sound FX' : 'Enable Tactile Sound FX'}
             aria-label="Toggle Sound Effects"
           >
@@ -216,7 +216,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               soundFx.playTick();
               setMobileMenuOpen(!mobileMenuOpen);
             }}
-            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-[#B9B5C9] transition-all hover:bg-white/[0.14] hover:text-white lg:hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
+            className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-[#B9B5C9] transition-colors hover:bg-white/[0.14] hover:text-white lg:hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -264,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenContact();
                 }}
-                className="w-full h-[48px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center transition-all cursor-pointer"
+                className="w-full h-[48px] rounded-full bg-white/[0.08] border border-white/10 text-[#B9B5C9] hover:bg-white/[0.14] hover:text-white font-editorial text-[14px] font-semibold tracking-[0.02em] flex items-center justify-center transition-colors cursor-pointer"
               >
                 Ask a Question →
               </PressFeedbackButton>

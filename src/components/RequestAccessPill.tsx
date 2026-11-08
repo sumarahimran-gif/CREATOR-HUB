@@ -25,10 +25,9 @@ export const RequestAccessPill: React.FC<RequestAccessPillProps> = ({
     return (
       <PressFeedbackButton
         size="lg"
-        tone="light"
         type="button"
         onClick={handleClick}
-        className={`group relative overflow-hidden w-full h-[54px] rounded-full pl-6 pr-2 bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] flex items-center justify-between transition-all duration-300 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] focus-visible:ring-offset-ink ${className}`}
+        className={`group relative overflow-hidden w-full h-[54px] rounded-full pl-6 pr-2 bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] flex items-center justify-between transition-colors duration-300 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] focus-visible:ring-offset-ink ${className}`}
       >
         <span className="relative z-10 font-editorial text-[15px] sm:text-[16px] font-semibold tracking-[0.04em] whitespace-nowrap text-[#08080C] select-none">
           Request Access
@@ -44,10 +43,9 @@ export const RequestAccessPill: React.FC<RequestAccessPillProps> = ({
     return (
       <PressFeedbackButton
         size="lg"
-        tone="light"
         type="button"
         onClick={handleClick}
-        className={`group relative overflow-hidden h-[44px] rounded-full pl-4 sm:pl-5 pr-1.5 bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] inline-flex items-center justify-between gap-3 transition-all duration-300 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] focus-visible:ring-offset-ink ${
+        className={`group relative overflow-hidden h-[44px] rounded-full pl-4 sm:pl-5 pr-1.5 bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] inline-flex items-center justify-between gap-3 transition-colors duration-300 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] focus-visible:ring-offset-ink ${
           isFullWidth ? 'w-full' : ''
         } ${className}`}
       >
@@ -65,10 +63,9 @@ export const RequestAccessPill: React.FC<RequestAccessPillProps> = ({
   return (
     <PressFeedbackButton
       size="lg"
-      tone="light"
       type="button"
       onClick={handleClick}
-      className={`group relative overflow-hidden h-[48px] rounded-full pl-5 pr-1.5 bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] inline-flex items-center justify-between gap-3 transition-all duration-300 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] focus-visible:ring-offset-ink ${
+      className={`group relative overflow-hidden h-[48px] rounded-full pl-5 pr-1.5 bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] inline-flex items-center justify-between gap-3 transition-colors duration-300 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] focus-visible:ring-offset-ink ${
         isFullWidth ? 'w-full' : ''
       } ${className}`}
     >

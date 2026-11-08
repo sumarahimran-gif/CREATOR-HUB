@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { ArrowLeft, X } from 'lucide-react';
+import { PressFeedbackButton } from './PressFeedbackButton';
 
 interface ImageViewerImage {
   src: string;
@@ -143,7 +144,8 @@ export const ImageViewerProvider: React.FC<React.PropsWithChildren> = ({ childre
           }}
           className="fixed inset-0 z-[110] grid place-items-center overflow-hidden bg-ink outline-none"
         >
-          <button
+          <PressFeedbackButton
+            size="sm"
             type="button"
             onClick={closeImage}
             aria-label="Back to website"
@@ -155,8 +157,9 @@ export const ImageViewerProvider: React.FC<React.PropsWithChildren> = ({ childre
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             <span>Back</span>
-          </button>
-          <button
+          </PressFeedbackButton>
+          <PressFeedbackButton
+            size="sm"
             type="button"
             onClick={closeImage}
             aria-label="Close image viewer"
@@ -167,7 +170,7 @@ export const ImageViewerProvider: React.FC<React.PropsWithChildren> = ({ childre
             }}
           >
             <X className="h-4 w-4" aria-hidden="true" />
-          </button>
+          </PressFeedbackButton>
           <img
             src={image.src}
             alt={image.alt}

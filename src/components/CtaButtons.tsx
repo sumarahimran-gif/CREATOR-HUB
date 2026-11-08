@@ -10,7 +10,7 @@ import { PressFeedbackButton } from './PressFeedbackButton';
 // - Fill: paper #F6F4FB with soft tint to #E9E3FA. Text: ink #08080C.
 // - 32px circular chip in lavender #B8A4F4 with ink arrow
 // - Diffuse lavender glow shadow on hover
-// - Press scale 0.94 with spring return, focus-visible 2px ring with 3px offset
+// - Press grows slightly with a spring return, focus-visible 2px ring with 3px offset
 // - Inverted on light "paper" sections: ink pill with paper text & lavender chip
 // =========================================================================
 export interface PrimaryCtaProps {
@@ -40,11 +40,10 @@ export const PrimaryCta: React.FC<PrimaryCtaProps> = ({
   return (
     <PressFeedbackButton
       size="lg"
-      tone={inverted ? 'dark' : 'light'}
       type="button"
       disabled={disabled}
       onClick={handleClick}
-      className={`group relative overflow-hidden rounded-full h-[56px] sm:h-[52px] pl-6 sm:pl-7 pr-2.5 sm:pr-3 inline-flex items-center justify-between sm:justify-center gap-3.5 transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] cursor-pointer ${
+      className={`group relative overflow-hidden rounded-full h-[56px] sm:h-[52px] pl-6 sm:pl-7 pr-2.5 sm:pr-3 inline-flex items-center justify-between sm:justify-center gap-3.5 transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] cursor-pointer ${
         inverted
           ? 'bg-ink text-paper shadow-[0_10px_35px_-10px_rgba(8,8,12,0.45)] focus-visible:ring-offset-paper'
           : 'bg-gradient-to-b from-[#F6F4FB] to-[#E9E3FA] text-[#08080C] shadow-[0_10px_40px_-10px_rgba(184,164,244,0.55)] focus-visible:ring-offset-ink'
@@ -101,11 +100,10 @@ export const SecondaryCta: React.FC<SecondaryCtaProps> = ({
   return (
     <PressFeedbackButton
       size="lg"
-      tone={inverted ? 'light' : 'dark'}
       type="button"
       disabled={disabled}
       onClick={handleClick}
-      className={`group relative overflow-hidden rounded-full h-[56px] sm:h-[52px] px-7 sm:px-8 inline-flex items-center justify-center gap-2.5 backdrop-blur-md transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] ${
+      className={`group relative overflow-hidden rounded-full h-[56px] sm:h-[52px] px-7 sm:px-8 inline-flex items-center justify-center gap-2.5 backdrop-blur-md transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-lav focus-visible:ring-offset-[3px] ${
         disabled ? 'opacity-70 cursor-default' : 'cursor-pointer'
       } ${
         inverted

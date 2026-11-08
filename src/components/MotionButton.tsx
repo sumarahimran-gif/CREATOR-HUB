@@ -1,8 +1,13 @@
 import React from 'react';
-import { motion, type HTMLMotionProps } from 'motion/react';
+import { type HTMLMotionProps } from 'motion/react';
 import { soundFx } from '../utils/audio';
+import { PressFeedbackButton } from './PressFeedbackButton';
 
-export interface MotionButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
+export interface MotionButtonProps
+  extends Omit<
+    HTMLMotionProps<'button'>,
+    'children' | 'whileHover' | 'whileTap' | 'transition' | 'size'
+  > {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   soundType?: 'action' | 'tick' | 'woosh' | 'none';
   children: React.ReactNode;
@@ -22,11 +27,11 @@ export const MotionButton: React.FC<MotionButtonProps> = ({
 
   const variantClasses = {
     primary:
-      'bg-paper text-ink hover:bg-paper-dim hover:shadow-[0_0_20px_rgba(184,164,244,0.4)] font-editorial font-bold tracking-widest text-xs py-3.5 px-7 sm:px-8 border border-paper focus-visible:ring-2 focus-visible:ring-lav transition-all duration-200',
+      'bg-paper text-ink hover:bg-paper-dim hover:shadow-[0_0_20px_rgba(184,164,244,0.4)] font-editorial font-bold tracking-widest text-xs py-3.5 px-7 sm:px-8 border border-paper focus-visible:ring-2 focus-visible:ring-lav transition-colors duration-200',
     secondary:
-      'border border-ink-3 bg-ink-2/80 text-paper hover:text-paper hover:border-lav hover:bg-ink-3 font-tech tracking-wider text-xs py-3.5 px-6 focus-visible:ring-2 focus-visible:ring-lav transition-all duration-200',
+      'border border-ink-3 bg-ink-2/80 text-paper hover:text-paper hover:border-lav hover:bg-ink-3 font-tech tracking-wider text-xs py-3.5 px-6 focus-visible:ring-2 focus-visible:ring-lav transition-colors duration-200',
     outline:
-      'border border-ink-3 bg-transparent text-paper-dim hover:border-lav hover:text-paper font-tech tracking-wider text-xs py-2.5 px-4 transition-all duration-200',
+      'border border-ink-3 bg-transparent text-paper-dim hover:border-lav hover:text-paper font-tech tracking-wider text-xs py-2.5 px-4 transition-colors duration-200',
     ghost:
       'bg-transparent text-paper-dim hover:text-paper hover:bg-ink-3/40 font-tech tracking-wider text-xs py-2 px-3 transition-colors duration-200',
   };
@@ -44,10 +49,8 @@ export const MotionButton: React.FC<MotionButtonProps> = ({
   };
 
   return (
-    <motion.button
-      whileHover={{ y: -1 }}
-      whileTap={{ y: 0 }}
-      transition={{ duration: 0.15, ease: 'easeOut' }}
+    <PressFeedbackButton
+      size="sm"
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
@@ -56,6 +59,6 @@ export const MotionButton: React.FC<MotionButtonProps> = ({
       <span className="relative z-10 inline-flex items-center justify-center gap-2">
         {children}
       </span>
-    </motion.button>
+    </PressFeedbackButton>
   );
 };

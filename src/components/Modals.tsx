@@ -198,13 +198,14 @@ export const Modals: React.FC<ModalsProps> = ({
                   <ShieldCheck className="w-4 h-4 text-lav" />
                   <span>Submissions are kept strictly private</span>
                 </div>
-                <button
+                <PressFeedbackButton
+                  size="sm"
                   type="button"
                   onClick={resetAndClose}
                   className="text-xs font-tech text-paper-dim hover:text-paper underline cursor-pointer"
                 >
                   Close Window
-                </button>
+                </PressFeedbackButton>
               </div>
             </div>
           )}
@@ -280,13 +281,14 @@ export const Modals: React.FC<ModalsProps> = ({
 
               <div className="pt-4 border-t border-ink-3 flex items-center justify-between text-xs font-tech text-paper-dim">
                 <span>Admissions & Support</span>
-                <button
+                <PressFeedbackButton
+                  size="sm"
                   type="button"
                   onClick={resetAndClose}
                   className="text-xs font-tech text-paper-dim hover:text-paper underline cursor-pointer"
                 >
                   Close Window
-                </button>
+                </PressFeedbackButton>
               </div>
             </div>
           )}

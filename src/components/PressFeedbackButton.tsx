@@ -3,44 +3,97 @@ import { motion, type HTMLMotionProps, useReducedMotion } from 'motion/react';
 
 type PressFeedbackButtonProps = Omit<
   HTMLMotionProps<'button'>,
-  'whileTap' | 'transition' | 'size'
+  | 'whileHover'
+  | 'whileTap'
+  | 'transition'
+  | 'size'
 > & {
   size?: 'lg' | 'sm' | 'row';
-  tone?: 'dark' | 'light';
 };
 
 export const PressFeedbackButton: React.FC<PressFeedbackButtonProps> = ({
   size = 'lg',
-  tone = 'dark',
   children,
+  animate,
+  onPointerEnter,
+  onPointerLeave,
+  onPointerDown,
+  onPointerUp,
+  onPointerCancel,
+  onTouchEnd,
+  onBlur,
   ...props
 }) => {
   const shouldReduceMotion = useReducedMotion();
-  const scale = size === 'row' ? 1.04 : 1.05;
-  const spring = { type: 'spring' as const, stiffness: 400, damping: 13 };
-  const pressShadow =
-    tone === 'light'
-      ? '0 0 0 2px rgba(72, 68, 82, 0.8), 0 0 18px rgba(72, 68, 82, 0.32)'
-      : '0 0 0 2px rgba(184, 164, 244, 0.9), 0 0 18px rgba(184, 164, 244, 0.5)';
-  const hoverShadow =
-    tone === 'light'
-      ? 'hover:shadow-[0_0_18px_rgba(72,68,82,0.3)]'
-      : 'hover:shadow-[0_0_18px_rgba(184,164,244,0.35)]';
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isHoverScaleEnabled, setIsHoverScaleEnabled] = React.useState(false);
+  const [isPressed, setIsPressed] = React.useState(false);
+  const hoverScale = size === 'lg' ? 1.04 : size === 'sm' ? 1.08 : 1;
+  const tapScale = size === 'lg' ? 1.07 : size === 'sm' ? 1.14 : 1.015;
+  const baseAnimate =
+    typeof animate === 'object' &&
+    animate !== null &&
+    !Array.isArray(animate) &&
+    !('start' in animate)
+      ? animate
+      : {};
+  const transition = shouldReduceMotion
+    ? { duration: 0 }
+    : { type: 'spring' as const, stiffness: 400, damping: 17 };
+
+  const clearFeedback = () => {
+    setIsHovered(false);
+    setIsHoverScaleEnabled(false);
+    setIsPressed(false);
+  };
 
   return (
     <motion.button
       {...props}
-      whileTap={
-        shouldReduceMotion
-          ? undefined
-          : {
-              scale,
-              boxShadow: pressShadow,
-              transition: spring,
-            }
-      }
-      transition={spring}
-      className={`${props.className ?? ''} ${hoverShadow}`}
+      animate={{
+        ...baseAnimate,
+        scale: shouldReduceMotion
+          ? 1
+          : isPressed
+            ? tapScale
+            : isHoverScaleEnabled
+              ? hoverScale
+              : 1,
+        filter: isHovered ? 'drop-shadow(0 0 7px rgba(184, 164, 244, 0.35))' : 'none',
+      }}
+      transition={transition}
+      onPointerEnter={(event) => {
+        const supportsHover = event.pointerType === 'mouse' || event.pointerType === 'pen';
+        setIsHovered(supportsHover);
+        setIsHoverScaleEnabled(supportsHover);
+        onPointerEnter?.(event);
+      }}
+      onPointerLeave={(event) => {
+        clearFeedback();
+        onPointerLeave?.(event);
+      }}
+      onPointerDown={(event) => {
+        if (event.button === 0) setIsPressed(true);
+        onPointerDown?.(event);
+      }}
+      onPointerUp={(event) => {
+        setIsPressed(false);
+        setIsHoverScaleEnabled(false);
+        onPointerUp?.(event);
+      }}
+      onPointerCancel={(event) => {
+        clearFeedback();
+        onPointerCancel?.(event);
+      }}
+      onTouchEnd={(event) => {
+        clearFeedback();
+        onTouchEnd?.(event);
+      }}
+      onBlur={(event) => {
+        clearFeedback();
+        onBlur?.(event);
+      }}
+      className={props.className}
     >
       {children}
     </motion.button>

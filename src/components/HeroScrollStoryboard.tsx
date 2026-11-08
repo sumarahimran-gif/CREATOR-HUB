@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { ChromeMedallion } from './ChromeMedallion';
+import { PressFeedbackButton } from './PressFeedbackButton';
 import { ThreeCanvas } from './ThreeCanvas';
 import { soundFx } from '../utils/audio';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
@@ -526,7 +527,8 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
         }
         className="w-full flex justify-center z-20"
       >
-        <button
+        <PressFeedbackButton
+          size="row"
           type="button"
           aria-label="Scroll to explore"
           onClick={handleScrollCueClick}
@@ -542,7 +544,7 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
           >
             <ArrowDown className="w-3 h-3 text-paper-dim group-hover:text-lav transition-colors" />
           </motion.div>
-        </button>
+        </PressFeedbackButton>
       </motion.div>
 
     </section>

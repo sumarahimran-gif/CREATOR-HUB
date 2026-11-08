@@ -169,7 +169,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                       <div className="pb-6 sm:pb-7 pr-6 text-base text-paper-dim font-sans leading-relaxed space-y-3">
                         <p>{faq.answer}</p>
                         {faq.isRefund && (
-                          <button
+                          <PressFeedbackButton
+                            size="sm"
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -180,7 +181,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                           >
                             <span>Read full Return & Refund Policy</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
-                          </button>
+                          </PressFeedbackButton>
                         )}
                       </div>
                     </motion.div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
 import { useImageViewer } from './ImageViewer';
+import { PressFeedbackButton } from './PressFeedbackButton';
 
 interface ResultImage {
   src: string;
@@ -88,7 +89,8 @@ export const ResultsSection: React.FC = () => {
                 image.wide ? 'lg:col-span-2' : ''
               }`}
             >
-              <button
+              <PressFeedbackButton
+                size="row"
                 type="button"
                 onClick={() => openImage(image)}
                 aria-label={`Open image: ${image.caption}`}
@@ -102,7 +104,7 @@ export const ResultsSection: React.FC = () => {
                   loading="lazy"
                   className="h-auto max-h-[60vh] w-auto max-w-full object-contain"
                 />
-              </button>
+              </PressFeedbackButton>
               <figcaption className="mt-4 text-center text-base text-paper-dim font-sans leading-relaxed">
                 {image.caption}
               </figcaption>
