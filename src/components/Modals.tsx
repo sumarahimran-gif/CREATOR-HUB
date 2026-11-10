@@ -35,7 +35,15 @@ export const Modals: React.FC<ModalsProps> = ({
     if (activeModal) {
       previousActiveElement.current = document.activeElement as HTMLElement | null;
     } else if (previousActiveElement.current) {
-      previousActiveElement.current.focus?.();
+      const restoredElement = previousActiveElement.current;
+      restoredElement.setAttribute('data-focus-restored', 'true');
+      const clearRestoredFocusState = () => {
+        restoredElement.removeAttribute('data-focus-restored');
+      };
+      restoredElement.addEventListener('keydown', clearRestoredFocusState, { once: true });
+      restoredElement.addEventListener('blur', clearRestoredFocusState, { once: true });
+      restoredElement.focus?.();
+      previousActiveElement.current = null;
     }
   }, [activeModal]);
 

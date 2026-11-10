@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { ChromeMedallion } from './ChromeMedallion';
 import { PressFeedbackButton } from './PressFeedbackButton';
 import { ThreeCanvas } from './ThreeCanvas';
 import { soundFx } from '../utils/audio';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
 import { useImageViewer } from './ImageViewer';
+import { RevealText } from './RevealText';
+import { FadeUp } from './FadeUp';
 import logoSrc from '../assets/images/logo-hero-500.webp';
 
 interface HeroScrollStoryboardProps {
@@ -24,6 +25,8 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
   const { openImage } = useImageViewer();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
+  const beamRef = useRef<HTMLSpanElement>(null);
+  const scrollCueRef = useRef<HTMLDivElement>(null);
 
   const [shockwave, setShockwave] = useState<boolean>(false);
   const [showSweep, setShowSweep] = useState<boolean>(false);
@@ -31,6 +34,35 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
 
   // Interactive mouse parallax offset (-1 to 1)
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const spacer = sectionRef.current;
+      if (!spacer) return;
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const rect = spacer.getBoundingClientRect();
+      const scrollDistance = Math.max(0, rect.height - window.innerHeight);
+      const progress = reducedMotion || scrollDistance === 0
+        ? 1
+        : Math.min(1, Math.max(0, -rect.top) / scrollDistance);
+
+      if (beamRef.current) {
+        beamRef.current.style.height = reducedMotion || progress > 0.8 ? '64px' : '0px';
+      }
+      if (scrollCueRef.current) {
+        scrollCueRef.current.style.opacity = reducedMotion || progress <= 0.05 ? '1' : '0';
+      }
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', updateProgress);
+      window.removeEventListener('resize', updateProgress);
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (shouldReduceMotion) return;
@@ -95,12 +127,6 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
     offset: ['start start', 'end start'],
   });
 
-  const headlineScrollOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const headlineScrollY = useTransform(scrollYProgress, [0, 0.6], [0, -40]);
-  const headlineScrollBlur = useTransform(scrollYProgress, [0, 0.6], [0, 6]);
-  const headlineScrollFilter = useTransform(headlineScrollBlur, (b) => `blur(${b}px)`);
-
-  const medallionScrollScale = useTransform(scrollYProgress, [0, 0.6], [1, 0.85]);
   const glowScrollOpacity = useTransform(scrollYProgress, [0, 0.6], [0.35, 0.05]);
 
   // Timing constants (ease [0.16, 1, 0.3, 1] throughout)
@@ -113,21 +139,29 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
     <section
       id="hero"
       ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="hero-section relative min-h-[100svh] w-full bg-ink text-paper flex flex-col items-center justify-center gap-[clamp(16px,3.2vh,48px)] px-4 sm:px-8 lg:px-14 pt-28 sm:pt-32 pb-2 overflow-hidden perspective-1000"
+      className="hero-scroll-spacer relative h-[250vh]"
     >
+      <div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="hero-section sticky top-0 box-border h-[100svh] w-full bg-ink text-paper flex flex-col items-center justify-center gap-2 px-5 md:px-8 lg:px-16 pb-2 overflow-hidden perspective-1000"
+      >
       {/* 1. Three.js Background Canvas with Interactive Mouse Particle Parallax */}
       <ThreeCanvas />
 
       {/* 2. Soft Ambient Breathing Lavender Nebula Behind Logo */}
       <motion.div
-        style={{ opacity: glowScrollOpacity }}
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ repeat: Infinity, duration: 4.8, ease: 'easeInOut' }}
+        style={{ opacity: shouldReduceMotion ? 0.3 : glowScrollOpacity }}
+        animate={
+          shouldReduceMotion
+            ? { scale: 1, opacity: 0.3 }
+            : { scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }
+        }
+        transition={
+          shouldReduceMotion
+            ? { duration: 0 }
+            : { repeat: Infinity, duration: 4.8, ease: 'easeInOut' }
+        }
         className="absolute inset-0 pointer-events-none z-0"
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[320px] bg-white/[0.04] blur-[130px] rounded-full pointer-events-none" />
@@ -135,55 +169,29 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
 
       {/* 3. Main Lockup Container (Fades and lifts on scroll-out) */}
       <motion.div
-        style={{
-          opacity: headlineScrollOpacity,
-          y: headlineScrollY,
-          filter: headlineScrollFilter,
-        }}
-        className="hero-lockup relative w-full mx-auto flex flex-col items-center gap-[clamp(16px,3.2vh,48px)] z-10"
+        className="hero-lockup relative mx-auto w-full max-w-7xl flex flex-col items-center gap-[clamp(8px,1.5vh,16px)] z-10"
       >
+        <div className="hero-headline-group flex w-max max-w-[94vw] flex-col items-center gap-2">
         {/* Single H1 for SEO and screen readers, content in DOM from first render */}
-        <h1 className="relative flex w-full md:w-max max-w-[92vw] flex-col items-center justify-center gap-2 md:flex-row md:gap-[clamp(16px,2.4vw,48px)] mx-auto">
+        <h1 className="hero-headline-row relative m-0 flex w-max max-w-full flex-row flex-nowrap items-center justify-center gap-[clamp(12px,1.5vw,24px)]">
           <span className="sr-only">Creator Hub – Private YouTube Automation Community</span>
 
           {/* Left Wing: CREATOR (Unfolds with 35ms letter stagger + 3D mouse parallax) */}
-          <motion.div
-            aria-hidden="true"
-            animate={{
-              x: 0,
-              y: mouseOffset.y * -4,
-            }}
-            transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-            className="relative order-2 flex min-w-0 max-w-full flex-col items-center text-center z-10 md:order-1 md:items-start md:text-left"
-          >
+          <div aria-hidden="true" className="relative order-1 z-10">
             <motion.div
-              initial={{ opacity: 0, letterSpacing: '0.12em' }}
-              animate={{ opacity: 1, letterSpacing: '-0.035em' }}
-              transition={{
-                duration: 1.1,
-                ease: EXPO_OUT,
-              }}
-              className="relative inline-flex items-center overflow-visible"
+              initial={shouldReduceMotion ? false : { opacity: 0, x: -34 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.55, ease: 'easeOut' }}
+              className="hero-entrance-word relative inline-flex items-center"
             >
               <div className="flex items-center">
                 {creatorLetters.map((char, i) => (
-                  <motion.span
+                  <span
                     key={`creator-char-${i}`}
-                    initial={{ opacity: 0, x: 65, filter: 'blur(12px)' }}
-                    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                    transition={
-                      shouldReduceMotion
-                        ? { duration: 0.4 }
-                        : {
-                            duration: 1.0,
-                            delay: i * 0.035,
-                            ease: EXPO_OUT,
-                          }
-                    }
-                    className="font-editorial font-bold text-[clamp(2.5rem,5.2vw,7rem)] tracking-[-0.02em] text-paper leading-[1.1] inline-block select-text"
+                    className="hero-headline-word font-editorial font-bold tracking-[-0.02em] text-paper leading-[1.1] inline-block select-text"
                   >
                     {char}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
 
@@ -197,58 +205,42 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                 />
               )}
             </motion.div>
-
-            {/* Small Label: OPERATING SYSTEM (Fades in with tracking tightening from 0.5em to 0.25em) */}
-            <motion.div
-              initial={{ opacity: 0, letterSpacing: '0.5em' }}
-              animate={{ opacity: 1, letterSpacing: '0.25em' }}
-              transition={
-                shouldReduceMotion
-                  ? { duration: 0.4 }
-                  : {
-                      duration: 0.8,
-                      delay: 0.7,
-                      ease: EXPO_OUT,
-                    }
-              }
-              className="block max-w-full select-text text-left md:absolute md:top-full md:mt-3"
-            >
-              <span className="max-w-full break-words text-[clamp(7px,0.65vw,12px)] font-tech font-normal uppercase leading-tight tracking-[0.08em] text-lav">
-                — Operating System
-              </span>
-            </motion.div>
-          </motion.div>
+          </div>
 
           {/* Central Medallion Anchor (z-20 so letters unfold from behind it + 3D Tilt Tracking) */}
+          <div className="relative order-2 z-20 shrink-0">
           <motion.div
-            style={{ scale: medallionScrollScale }}
-            animate={{
-              x: 0,
-              y: mouseOffset.y * 6,
-              rotateY: mouseOffset.x * 8,
-              rotateX: -mouseOffset.y * 8,
-            }}
-            transition={{ type: 'spring', stiffness: 140, damping: 20 }}
-            className="relative order-1 z-20 shrink-0 transform-style-3d md:order-2"
+            animate={
+              shouldReduceMotion
+                ? { x: 0, y: 0 }
+                : {
+                    x: 0,
+                    y: mouseOffset.y * 6,
+                    rotateY: mouseOffset.x * 8,
+                    rotateX: -mouseOffset.y * 8,
+                }
+            }
+            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 140, damping: 20 }}
+            className="transform-style-3d"
           >
             {/* Medallion Scale (0.88 to 1) & 1.5° Tilt Settling */}
             <motion.div
-              initial={{ scale: 0.88, rotate: -1.5, opacity: 0.8 }}
+              initial={shouldReduceMotion ? false : { scale: 0.88, rotate: -1.5, opacity: 0 }}
               animate={{ scale: 1, rotate: 0, opacity: 1 }}
               transition={
                 shouldReduceMotion
-                  ? { duration: 0.4 }
+                  ? { duration: 0 }
                   : {
-                      scale: { duration: 1.0, delay: 0.3, ease: EXPO_OUT },
-                      rotate: { duration: 1.0, delay: 0.3, ease: EXPO_OUT },
-                      opacity: { duration: 0.8, delay: 0.2 },
+                      scale: { duration: 0.6, delay: 0.08, ease: EXPO_OUT },
+                      rotate: { duration: 0.6, delay: 0.08, ease: EXPO_OUT },
+                      opacity: { duration: 0.6, delay: 0.08 },
                     }
               }
             >
               {/* Independent 6s Floating Levitation */}
               <motion.div
-                animate={{ y: [0, -7, 0] }}
-                transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
+                animate={shouldReduceMotion ? { y: 0 } : { y: [0, -7, 0] }}
+                transition={shouldReduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 6, ease: 'easeInOut' }}
                 className="flex flex-col items-center justify-center"
               >
                 {/* Interactive button supporting click, Enter, and Space */}
@@ -293,68 +285,30 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                     />
                   )}
 
-                  <ChromeMedallion size="clamp(90px, 12vw, 230px)" className="hero-medallion transition-transform duration-300" />
+                  <ChromeMedallion size="clamp(72px, min(12vw, 21vh), 230px)" className="hero-medallion transition-transform duration-300" />
                 </button>
               </motion.div>
             </motion.div>
           </motion.div>
+          </div>
 
           {/* Right Wing: HUB. (Unfolds with 35ms letter stagger + 3D mouse parallax) */}
-          <motion.div
-            aria-hidden="true"
-            animate={{
-              x: 0,
-              y: mouseOffset.y * -4,
-            }}
-            transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-            className="relative order-3 flex min-w-0 max-w-full flex-col items-center text-center z-10 md:items-end md:text-right"
-          >
+          <div aria-hidden="true" className="relative order-3 z-10">
             {/* Small Label: SCALE • RETENTION (Fades in with tracking tightening) */}
-            <motion.span
-              initial={{ opacity: 0, letterSpacing: '0.5em' }}
-              animate={{ opacity: 1, letterSpacing: '0.25em' }}
-              transition={
-                shouldReduceMotion
-                  ? { duration: 0.4 }
-                  : {
-                      duration: 0.8,
-                      delay: 0.7,
-                      ease: EXPO_OUT,
-                    }
-              }
-              className="block max-w-full break-words text-right text-[clamp(7px,0.65vw,12px)] font-tech font-normal uppercase leading-tight tracking-[0.08em] text-lav md:absolute md:bottom-full md:mb-3 md:right-0"
-            >
-              SCALE · RETENTION —
-            </motion.span>
-
             <motion.div
-              initial={{ opacity: 0, letterSpacing: '0.12em' }}
-              animate={{ opacity: 1, letterSpacing: '-0.035em' }}
-              transition={{
-                duration: 1.1,
-                ease: EXPO_OUT,
-              }}
-              className="relative inline-flex items-center overflow-visible"
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 34 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.55, ease: 'easeOut' }}
+              className="hero-entrance-word relative inline-flex items-center"
             >
               <div className="flex items-center">
                 {hubLetters.map((char, i) => (
-                  <motion.span
+                  <span
                     key={`hub-char-${i}`}
-                    initial={{ opacity: 0, x: -65, filter: 'blur(12px)' }}
-                    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                    transition={
-                      shouldReduceMotion
-                        ? { duration: 0.4 }
-                        : {
-                            duration: 1.0,
-                            delay: i * 0.035,
-                            ease: EXPO_OUT,
-                          }
-                    }
-                    className="font-editorial font-bold text-[max(2.4rem,calc(clamp(2.5rem,5.2vw,7rem)-0.9vw))] tracking-[-0.02em] text-paper leading-[1.1] inline-block select-text"
+                    className="hero-headline-word font-editorial font-bold tracking-[-0.02em] text-paper leading-[1.1] inline-block select-text"
                   >
                     {char}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
 
@@ -368,168 +322,91 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
                 />
               )}
             </motion.div>
-          </motion.div>
+          </div>
         </h1>
 
-        {/* Thin 1px Lavender Line (scaleX 0 to 1, 0.9s duration) */}
-        <div className="w-full max-w-xl mx-auto overflow-hidden">
-          <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={
-              shouldReduceMotion
-                ? { duration: 0.4 }
-                : {
-                    duration: 0.9,
-                    delay: 0.7,
-                    ease: EXPO_OUT,
-                  }
-            }
-            className="h-[1px] bg-lav/30 w-full origin-center"
-          />
+        <div className="hero-headline-labels flex w-full items-center justify-between">
+          <motion.span
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.6, ease: EXPO_OUT }}
+            className="font-tech text-[clamp(7px,0.65vw,12px)] font-normal uppercase leading-tight tracking-[0.08em] text-lav"
+          >
+            — Operating System
+          </motion.span>
+          <motion.span
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.6, ease: EXPO_OUT }}
+            className="font-tech text-[clamp(7px,0.65vw,12px)] font-normal uppercase leading-tight tracking-[0.08em] text-lav"
+          >
+            SCALE · RETENTION —
+          </motion.span>
+        </div>
         </div>
 
-        {/* Main Headline revealed LINE BY LINE in overflow-hidden masks (90ms stagger) */}
-        <div className="w-full text-center max-w-2xl mx-auto space-y-1 z-20">
-          <h2 className="font-editorial font-bold text-base sm:text-xl md:text-2xl text-paper tracking-[-0.02em] leading-snug">
-            <span className="sr-only">
-              Build your channel alongside creators who are actively building theirs.
-            </span>
-            {/* Animated lines are decorative; the hidden sentence supplies the heading text. */}
-            <span aria-hidden="true" className="block overflow-hidden pb-0.5">
-              <motion.span
-                initial={{ y: '100%', opacity: 0, filter: 'blur(6px)' }}
-                animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
-                transition={
-                  shouldReduceMotion
-                    ? { duration: 0.4 }
-                    : {
-                        duration: 0.75,
-                        delay: 0.9,
-                        ease: EXPO_OUT,
-                      }
-                }
-                className="inline-block"
-              >
-                Build your channel alongside creators
-              </motion.span>
-            </span>
+        {/* Main Headline */}
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.6, delay: 0.18, ease: 'easeOut' }}
+          className="hero-entrance-caption w-full text-center max-w-2xl mx-auto space-y-1 z-20"
+        >
+          <RevealText
+            text="Build your channel alongside creators who are actively building theirs."
+            lines={[
+              'Build your channel alongside creators',
+              'who are actively building theirs.',
+            ]}
+            as="h2"
+            delay={0.16}
+            duration={0.6}
+            className="font-editorial font-bold text-base sm:text-xl md:text-2xl text-paper tracking-[-0.02em] leading-snug"
+          />
 
-            <span aria-hidden="true" className="block overflow-hidden pb-0.5">
-              <motion.span
-                initial={{ y: '100%', opacity: 0, filter: 'blur(6px)' }}
-                animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
-                transition={
-                  shouldReduceMotion
-                    ? { duration: 0.4 }
-                    : {
-                        duration: 0.75,
-                        delay: 0.99,
-                        ease: EXPO_OUT,
-                      }
-                }
-                className="inline-block"
-              >
-                who are actively building theirs.
-              </motion.span>
-            </span>
-          </h2>
-
-          {/* Paragraph (y 16 to 0, opacity 0 to 1, blur 6px to 0) */}
+          {/* Paragraph */}
           <motion.p
-            initial={{ y: 16, opacity: 0, filter: 'blur(6px)' }}
-            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-            transition={
-              shouldReduceMotion
-                ? { duration: 0.4 }
-                : {
-                    duration: 0.7,
-                    delay: 1.2,
-                    ease: EXPO_OUT,
-                  }
-            }
             className="text-sm sm:text-base text-paper-dim font-sans leading-relaxed pt-2"
           >
             Creator Hub is a structured private community for creators committed to YouTube Automation. Receive practical guidance, valuable resources, proven workflows, and access to a network of individuals working toward similar goals.
           </motion.p>
-        </div>
+        </motion.div>
 
-        {/* Action CTAs: Gap 14px between buttons. Side by side from 640px up. Stacked full-width below 640px, with primary on top. Enter last in hero timeline (100ms apart), rising y 14 to 0 with fade */}
+        {/* Action CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-[14px] w-full sm:w-auto max-w-sm sm:max-w-none mx-auto z-20">
-          <motion.div
-            initial={{ y: 14, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={
-              shouldReduceMotion
-                ? { duration: 0.4 }
-                : {
-                    duration: 0.6,
-                    delay: 1.4,
-                    ease: EXPO_OUT,
-                  }
-            }
-            className="w-full sm:w-auto"
-          >
+          <div className="w-full sm:w-auto">
             <PrimaryCta
               onClick={onOpenApply}
               label="Request Access"
               className="w-full sm:w-auto"
             />
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ y: 14, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={
-              shouldReduceMotion
-                ? { duration: 0.4 }
-                : {
-                    duration: 0.6,
-                    delay: 1.5,
-                    ease: EXPO_OUT,
-                  }
-            }
-            className="w-full sm:w-auto"
-          >
+          <div className="w-full sm:w-auto">
             <SecondaryCta
               onClick={onOpenContact}
               label="Contact Us"
               className="w-full sm:w-auto"
             />
-          </motion.div>
+          </div>
         </div>
 
         {/* Hero Disclaimer (Opacity only fade) */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={
-            shouldReduceMotion
-              ? { duration: 0.4 }
-              : {
-                  duration: 0.5,
-                  delay: 1.65,
-                }
-          }
-          className="text-xs text-paper-dim font-tech text-center max-w-lg mx-auto leading-relaxed tracking-wider z-20"
-        >
-          No misleading guarantees or promises of overnight success. Practical guidance, resources, and continuous execution.
-        </motion.p>
+        <FadeUp>
+          <p className="text-xs text-paper-dim font-tech text-center max-w-lg mx-auto leading-relaxed tracking-wider z-20">
+            No misleading guarantees or promises of overnight success. Practical guidance, resources, and continuous execution.
+          </p>
+        </FadeUp>
       </motion.div>
 
+      <div className="hero-scroll-beam-wrap pointer-events-none absolute bottom-14 left-1/2 flex h-16 -translate-x-1/2 justify-center" aria-hidden="true">
+        <span ref={beamRef} className="hero-scroll-beam" />
+      </div>
+
       {/* Quiet Scroll Cue Button (Continuous floating bounce prompt) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={
-          shouldReduceMotion
-            ? { duration: 0.4 }
-            : {
-                duration: 0.5,
-                delay: 1.8,
-              }
-        }
-        className="w-full flex justify-center z-20"
+      <div
+        ref={scrollCueRef}
+        className="hero-scroll-cue absolute bottom-2 left-0 right-0 flex w-full justify-center z-20"
       >
         <PressFeedbackButton
           size="row"
@@ -541,16 +418,13 @@ export const HeroScrollStoryboard: React.FC<HeroScrollStoryboardProps> = ({
           <span className="text-[10px] font-tech tracking-[0.3em] text-paper-dim group-hover:text-lav uppercase transition-colors">
             Scroll
           </span>
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
-            className="w-6 h-6 rounded-full border border-ink-3 flex items-center justify-center bg-ink-2/80 group-hover:border-lav/50 transition-colors"
-          >
-            <ArrowDown className="w-3 h-3 text-paper-dim group-hover:text-lav transition-colors" />
-          </motion.div>
+          <span className="hero-scroll-dot-track" aria-hidden="true">
+            <span className="hero-scroll-dot" />
+          </span>
         </PressFeedbackButton>
-      </motion.div>
+      </div>
 
+      </div>
     </section>
   );
 };

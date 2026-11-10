@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
 import { useImageViewer } from './ImageViewer';
 import { PressFeedbackButton } from './PressFeedbackButton';
 
@@ -59,32 +60,32 @@ export const ResultsSection: React.FC = () => {
   return (
     <section
       id="results"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-lav uppercase">
-              <span className="w-5 h-[1px] bg-lav/40 inline-block shrink-0" />
+              <span className="w-5 h-[1px] bg-lav-soft inline-block shrink-0" />
               <span>RESULTS</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="Real results from real channels."
             as="h2"
+            direction="right"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15]"
           />
         </div>
 
-        <RevealGroup
+        <FadeUp
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          stagger={0.08}
+          stagger={0.1}
         >
           {resultImages.map((image) => (
             <motion.figure
               key={image.src}
-              variants={revealChildVariants}
               className={`flex min-w-0 flex-col rounded-[20px] border border-white/10 bg-ink-2 p-4 ${
                 image.wide ? 'lg:col-span-2' : ''
               }`}
@@ -110,13 +111,13 @@ export const ResultsSection: React.FC = () => {
               </figcaption>
             </motion.figure>
           ))}
-        </RevealGroup>
+        </FadeUp>
 
-        <RevealItem>
+        <FadeUp>
           <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm text-paper-dim font-sans leading-relaxed">
             Results shown are from the founder&apos;s own channels and are not typical or guaranteed. Creator Hub does not promise any particular income or growth.
           </p>
-        </RevealItem>
+        </FadeUp>
       </div>
 
     </section>

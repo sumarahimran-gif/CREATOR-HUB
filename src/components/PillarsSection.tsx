@@ -2,8 +2,9 @@ import React from 'react';
 import { TrendingUp, Brain, Cpu, CheckCircle2 } from 'lucide-react';
 import { CorePillar } from '../types';
 import { PrimaryCta } from './CtaButtons';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
-import { motion } from 'motion/react';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
+import { StorySlides } from './StorySlides';
 
 interface PillarsSectionProps {
   onOpenApply: () => void;
@@ -72,42 +73,39 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenApply }) =
   return (
     <section
       id="pillars"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-ink border-t border-ink-3"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         
         {/* Section Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-lav uppercase">
-              <span className="w-5 h-[1px] bg-lav/40 inline-block shrink-0" />
+              <span className="w-5 h-[1px] bg-lav-soft inline-block shrink-0" />
               <span>Core Infrastructure</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="Three foundational pillars."
             as="h2"
+            direction="right"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink-3 pl-5 py-1">
               <p className="text-sm font-tech uppercase tracking-[0.15em] text-paper-dim">
                 A balanced operating triad designed for sustained digital scale
               </p>
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
-        {/* 3 Pillars Grid */}
-        <RevealGroup className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10" stagger={0.09}>
-          {pillars.map((pillar) => (
-            <motion.div
-              key={pillar.id}
-              variants={revealChildVariants}
-              className="border-t border-ink-3 pt-8 flex flex-col justify-between group hover:border-lav/50 transition-colors"
-            >
+        <StorySlides
+          aria-label="Core infrastructure pillars"
+          slides={pillars.map((pillar) => (
+            <FadeUp key={pillar.id} className="redesign-card flex flex-col justify-between group">
               <div className="space-y-6">
                 {/* Header Metadata */}
                 <div className="flex items-center justify-between">
@@ -135,7 +133,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenApply }) =
                 </p>
 
                 {/* Deliverables List */}
-                <div className="space-y-3.5 pt-5 border-t border-ink-3">
+                <FadeUp className="space-y-3.5 pt-5 border-t border-ink-3" stagger={0.1}>
                   {pillar.deliverables.map((item, dIdx) => (
                     <div
                       key={dIdx}
@@ -145,7 +143,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenApply }) =
                       <span>{item}</span>
                     </div>
                   ))}
-                </div>
+                </FadeUp>
               </div>
 
               {/* Action Button for Automation Pillar */}
@@ -158,9 +156,9 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenApply }) =
                   />
                 </div>
               )}
-            </motion.div>
+            </FadeUp>
           ))}
-        </RevealGroup>
+        />
 
       </div>
     </section>

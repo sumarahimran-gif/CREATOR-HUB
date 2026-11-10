@@ -183,7 +183,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const el = document.querySelector(href);
     if (el) {
-      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      el.scrollIntoView({ behavior: shouldReduceMotion ? 'auto' : 'smooth', block: 'start' });
     }
   };
 
@@ -245,7 +245,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Desktop Navigation Links with Active Highlight */}
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-[18px] px-2 lg:flex lg:px-0 xl:px-2 2xl:gap-8" aria-label="Main Navigation">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-3 px-2 lg:flex xl:gap-[18px] xl:px-2 2xl:gap-8" aria-label="Main Navigation">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href;
             return (
@@ -256,8 +256,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative shrink-0 whitespace-nowrap py-2 font-tech text-[11px] uppercase tracking-[0.14em] transition-colors 2xl:text-xs ${
                   isActive
-                    ? 'font-bold text-white'
-                    : 'text-paper-dim hover:text-white'
+                    ? 'group font-bold text-lav'
+                    : 'group text-paper-dim hover:text-lav'
                 }`}
               >
                 {link.label}
@@ -268,6 +268,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+                  />
+                )}
+                {!isActive && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-lav transition-transform duration-[250ms] ease-out group-hover:scale-x-100 motion-reduce:transition-none"
                   />
                 )}
               </PressFeedbackLink>
@@ -374,7 +380,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     href={link.href}
                     onClick={(event) => handleNavClick(event, link.href)}
                     className={`relative flex min-h-12 items-center border-b border-ink-3 px-4 py-3 text-sm font-tech uppercase tracking-widest transition-colors ${
-                      isActive ? 'font-bold text-lav' : 'text-paper-dim hover:text-paper'
+                      isActive ? 'group font-bold text-lav' : 'group text-paper-dim hover:text-paper'
                     }`}
                   >
                     {link.label}
@@ -384,6 +390,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                         animate={{ scaleX: 1 }}
                         className="absolute bottom-0 left-4 right-4 h-[2px] origin-left bg-lav"
                         transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+                      />
+                    )}
+                    {!isActive && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute bottom-0 left-4 right-4 h-[2px] origin-left scale-x-0 bg-lav transition-transform duration-[250ms] ease-out group-hover:scale-x-100 motion-reduce:transition-none"
                       />
                     )}
                   </PressFeedbackLink>

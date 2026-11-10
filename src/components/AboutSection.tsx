@@ -1,7 +1,9 @@
 import React from 'react';
 import { BookOpen, Wrench, BarChart3, TrendingUp, ShieldAlert } from 'lucide-react';
 import { PrimaryCta } from './CtaButtons';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
+import { ScrubText } from './ScrubText';
 import { motion } from 'motion/react';
 
 interface AboutSectionProps {
@@ -43,58 +45,60 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
   return (
     <section
       id="about"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         
         {/* Section Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-lav uppercase">
-              <span className="w-5 h-[1px] bg-lav/40 inline-block shrink-0" />
+              <span className="w-5 h-[1px] bg-lav-soft inline-block shrink-0" />
               <span>About Creator Hub</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="More than just another course."
             as="h2"
+            direction="left"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink-3 pl-5 py-1">
-              <p className="text-base text-paper-dim font-sans leading-relaxed">
-                Creator Hub is a private community for individuals interested in YouTube Automation and digital content creation. Rather than providing a collection of pre-recorded lessons without ongoing support, Creator Hub offers a continuous environment where members can learn, ask questions, exchange ideas, access resources, and connect with other creators.
-              </p>
+              <ScrubText
+                className="text-base text-paper-dim font-sans leading-relaxed"
+                text="Creator Hub is a private community for individuals interested in YouTube Automation and digital content creation. Rather than providing a collection of pre-recorded lessons without ongoing support, Creator Hub offers a continuous environment where members can learn, ask questions, exchange ideas, access resources, and connect with other creators."
+              />
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
         {/* The Methodology */}
         <div className="space-y-10">
           <div>
-            <RevealItem>
+            <FadeUp>
               <span className="text-xs sm:text-sm font-tech text-lav uppercase tracking-widest block">
                 The Methodology
               </span>
-            </RevealItem>
+            </FadeUp>
 
-            <RevealHeading
+            <RevealText
               text="The Objective is Straightforward:"
               as="h3"
+              direction="left"
               className="font-editorial font-bold text-xl sm:text-2xl text-paper uppercase tracking-[-0.02em] mt-1"
             />
           </div>
 
           {/* Sibling Staggered Grid */}
-          <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10" stagger={0.08}>
+          <FadeUp className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10" stagger={0.1}>
             {steps.map((item) => {
               const Icon = item.icon;
               return (
                 <motion.div
                   key={item.step}
-                  variants={revealChildVariants}
                   className="border-t border-ink-3 pt-6 space-y-4 group hover:border-lav/50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
@@ -108,7 +112,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
                     <span className="text-xs sm:text-sm font-tech text-lav uppercase tracking-wider block transition-colors">
                       Step {item.step} // {item.action}
                     </span>
-                    <h4 className="font-editorial font-semibold text-base sm:text-lg text-paper">
+                    <h4 className="font-editorial font-semibold text-base sm:text-lg text-paper transition-colors duration-200 group-hover:text-lav-soft motion-reduce:transition-none">
                       {item.focus}
                     </h4>
                   </div>
@@ -119,22 +123,22 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
                 </motion.div>
               );
             })}
-          </RevealGroup>
+          </FadeUp>
         </div>
 
         {/* Philosophy Callout & Disclaimer Note */}
-        <RevealGroup className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch pt-6 border-t border-ink-3" stagger={0.1}>
+        <FadeUp className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch pt-6 border-t border-ink-3" stagger={0.1}>
           <motion.div
-            variants={revealChildVariants}
-            className="md:col-span-7 p-7 sm:p-9 border border-ink-3 bg-ink-2/60 flex flex-col justify-between hover:border-lav/40 transition-colors"
+            className="redesign-card md:col-span-7 bg-ink-2/60 flex flex-col justify-between group"
           >
             <div className="space-y-3.5">
               <span className="text-xs sm:text-sm font-tech text-lav uppercase tracking-widest block">
                 Core Philosophy
               </span>
-              <p className="font-editorial text-lg sm:text-xl text-paper font-bold leading-snug">
-                Creator Hub is designed for individuals who are prepared to take action and apply what they learn, rather than simply consume information.
-              </p>
+              <ScrubText
+                className="font-editorial text-lg sm:text-xl text-paper font-bold leading-snug group-hover:text-lav-soft transition-colors duration-200"
+                text="Creator Hub is designed for individuals who are prepared to take action and apply what they learn, rather than simply consume information."
+              />
             </div>
 
             {onOpenApply && (
@@ -145,8 +149,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
           </motion.div>
 
           <motion.div
-            variants={revealChildVariants}
-            className="md:col-span-5 p-7 sm:p-9 border border-ink-3 bg-ink-2/40 flex flex-col justify-between"
+            className="redesign-card md:col-span-5 bg-ink-2/40 flex flex-col justify-between"
           >
             <div className="space-y-3.5">
               <div className="flex items-center gap-2 text-paper-dim">
@@ -163,7 +166,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenApply }) => {
               Policy & Transparency
             </div>
           </motion.div>
-        </RevealGroup>
+        </FadeUp>
 
       </div>
     </section>

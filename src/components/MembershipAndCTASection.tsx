@@ -1,7 +1,8 @@
 import React from 'react';
 import { Check, ShieldCheck } from 'lucide-react';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
 import { motion } from 'motion/react';
 
 interface MembershipAndCTASectionProps {
@@ -27,36 +28,37 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
   return (
     <section
       id="membership"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-sand text-ink border-t border-sand-border overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-sand text-ink border-t border-sand-border overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         {/* Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-ink uppercase">
-              <span className="w-5 h-[1.5px] bg-lav-deep inline-block shrink-0" />
+              <span className="w-5 h-[1.5px] bg-lav-soft inline-block shrink-0" />
               <span>What's included</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="One community. Everything you need in one place."
             as="h2"
+            direction="left"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-ink tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink/20 pl-5 py-1">
               <p className="text-sm sm:text-base text-sand-ink font-sans leading-relaxed">
                 A unified private environment built for continuous execution and peer collaboration.
               </p>
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
         {/* Minimal High-Contrast Membership Panel (Light Architectural Surface) */}
-        <RevealItem delay={0.1}>
-          <div className="border border-sand-border bg-sand-panel p-8 sm:p-12 lg:p-14 shadow-lg hover:border-ink/30 transition-colors">
+        <FadeUp delay={0.1}>
+          <div className="group border border-sand-border bg-sand-panel p-8 sm:p-12 lg:p-14 shadow-lg hover:border-ink/30 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               
               {/* Left Column: Details & Inclusions */}
@@ -65,12 +67,12 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                   <span className="text-xs sm:text-sm font-tech text-sand-ink uppercase tracking-widest block font-medium">
                     All-Inclusive Membership
                   </span>
-                  <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-ink uppercase tracking-[-0.02em]">
+                  <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-ink uppercase tracking-[-0.02em] transition-colors duration-200 group-hover:text-blue-ink motion-reduce:transition-none">
                     Your Creator Hub membership includes:
                   </h3>
                 </div>
 
-                <div className="space-y-4 pt-3">
+                <FadeUp className="space-y-4 pt-3" stagger={0.1}>
                   {inclusions.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-3.5 text-base text-sand-ink font-sans leading-relaxed group">
                       <div className="w-5 h-5 rounded-sm bg-ink text-paper flex items-center justify-center shrink-0 mt-0.5">
@@ -79,7 +81,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                       <span className="text-sand-ink group-hover:text-ink transition-colors">{item}</span>
                     </div>
                   ))}
-                </div>
+                </FadeUp>
 
                 <div className="pt-5 border-t border-ink/10">
                   <p className="text-sm text-sand-ink font-sans italic">
@@ -97,7 +99,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
                   </div>
 
                   <div className="space-y-2 pt-1">
-                    <h4 className="font-editorial font-semibold text-xl text-ink uppercase tracking-[-0.02em]">
+                    <h4 className="font-editorial font-semibold text-xl text-ink uppercase tracking-[-0.02em] transition-colors duration-200 group-hover:text-blue-ink motion-reduce:transition-none">
                       Private Admissions
                     </h4>
                     <p className="text-base text-sand-ink font-sans leading-relaxed">
@@ -140,7 +142,7 @@ export const MembershipAndCTASection: React.FC<MembershipAndCTASectionProps> = (
 
             </div>
           </div>
-        </RevealItem>
+        </FadeUp>
       </div>
     </section>
   );

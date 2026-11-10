@@ -1,7 +1,8 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
-import { motion } from 'motion/react';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
+import { Reveal } from './Reveal';
 
 export const AudienceFitSection: React.FC = () => {
   const forYouList = [
@@ -61,48 +62,49 @@ export const AudienceFitSection: React.FC = () => {
   return (
     <section
       id="who-its-for"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-sand text-ink border-t border-sand-border overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-sand text-ink border-t border-sand-border overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         {/* Section Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-ink uppercase">
-              <span className="w-5 h-[1.5px] bg-lav-deep inline-block shrink-0" />
+              <span className="w-5 h-[1.5px] bg-lav-soft inline-block shrink-0" />
               <span>Is this for you?</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="Who this community is for — and who it isn't."
             as="h2"
+            direction="left"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-ink tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink/20 pl-5 py-1">
               <p className="text-sm sm:text-base text-sand-ink font-sans leading-relaxed">
                 Mutual alignment ensures a focused, action-oriented environment for everyone involved.
               </p>
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
         {/* 2-Column Comparison Layout (Light Theme, High-Contrast Architectural) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-stretch">
           
           {/* Column 1: This is for you if */}
-          <RevealItem delay={0.05} className="border-t-2 border-ink pt-8 space-y-7">
+          <FadeUp delay={0.05} className="group border-t-2 border-ink pt-8 space-y-7">
             <div className="flex items-center justify-between border-b border-ink/15 pb-4">
               <div className="space-y-1">
-                <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-ink uppercase tracking-[-0.02em]">
+                <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-ink uppercase tracking-[-0.02em] transition-colors duration-200 group-hover:text-blue-ink motion-reduce:transition-none">
                   This is for you if:
                 </h3>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-lav-deep" />
             </div>
 
-            <ul className="space-y-5 pt-2">
+            <Reveal as="ul" className="space-y-5 pt-2" stagger={0.1}>
               {forYouList.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3.5 text-base text-sand-ink font-sans leading-relaxed group">
                   <div className="w-5 h-5 rounded-sm bg-ink text-paper flex items-center justify-center shrink-0 mt-0.5">
@@ -118,21 +120,21 @@ export const AudienceFitSection: React.FC = () => {
                   </div>
                 </li>
               ))}
-            </ul>
-          </RevealItem>
+            </Reveal>
+          </FadeUp>
 
           {/* Column 2: Not a fit if */}
-          <RevealItem delay={0.12} className="border-t-2 border-ink/30 pt-8 space-y-7">
+          <FadeUp delay={0.12} className="group border-t-2 border-ink/30 pt-8 space-y-7">
             <div className="flex items-center justify-between border-b border-ink/15 pb-4">
               <div className="space-y-1">
-                <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-sand-ink uppercase tracking-[-0.02em]">
+                <h3 className="font-editorial font-semibold text-xl sm:text-2xl text-sand-ink uppercase tracking-[-0.02em] transition-colors duration-200 group-hover:text-blue-ink motion-reduce:transition-none">
                   Not a fit if:
                 </h3>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-ink/30" />
             </div>
 
-            <ul className="space-y-5 pt-2">
+            <Reveal as="ul" className="space-y-5 pt-2" stagger={0.1}>
               {notForYouList.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3.5 text-base text-sand-ink font-sans leading-relaxed">
                   <div className="w-5 h-5 rounded-sm border border-ink/30 bg-ink/5 text-sand-ink flex items-center justify-center shrink-0 mt-0.5">
@@ -148,8 +150,8 @@ export const AudienceFitSection: React.FC = () => {
                   </div>
                 </li>
               ))}
-            </ul>
-          </RevealItem>
+            </Reveal>
+          </FadeUp>
 
         </div>
       </div>

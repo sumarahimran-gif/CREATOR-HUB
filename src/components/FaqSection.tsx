@@ -4,7 +4,8 @@ import { Plus, Minus, ArrowUpRight } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { SecondaryCta } from './CtaButtons';
 import { PressFeedbackButton } from './PressFeedbackButton';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
 
 interface FaqSectionProps {
   onOpenRefundPolicy: () => void;
@@ -97,43 +98,43 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
   return (
     <section
       id="faq"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         {/* Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-lav uppercase">
-              <span className="w-5 h-[1px] bg-lav/40 inline-block shrink-0" />
+              <span className="w-5 h-[1px] bg-lav-soft inline-block shrink-0" />
               <span>FAQ</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="Frequently Asked Questions"
             as="h2"
+            direction="right"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink-3 pl-5 py-1">
               <p className="text-sm font-tech uppercase tracking-[0.15em] text-paper-dim">
                 Everything you need to know about Creator Hub, YouTube Automation, and admissions.
               </p>
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
         {/* Accordion List with Shared Reveal System */}
-        <RevealGroup className="border-t border-ink-3 divide-y divide-ink-3" stagger={0.06}>
+        <FadeUp className="border-t border-ink-3 divide-y divide-ink-3" stagger={0.1}>
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <motion.div
                 key={index}
-                variants={revealChildVariants}
                 className="transition-colors"
               >
                 <div>
@@ -146,7 +147,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                     onClick={() => toggleFaq(index)}
                     className="w-full py-6 sm:py-7 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none group"
                   >
-                    <span className={`font-editorial font-bold text-lg sm:text-xl tracking-tight pr-4 transition-colors ${isOpen ? 'text-lav-soft' : 'text-paper group-hover:text-paper-dim'}`}>
+                    <span className={`font-editorial font-bold text-lg sm:text-xl tracking-tight pr-4 transition-colors duration-200 motion-reduce:transition-none ${isOpen ? 'text-lav-soft' : 'text-paper group-hover:text-lav-soft'}`}>
                       {faq.question}
                     </span>
                     <div className={`w-8 h-8 border flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'border-lav bg-lav-deep/20 text-lav' : 'border-ink-3 text-paper-dim bg-ink-2 group-hover:border-paper-dim'}`}>
@@ -190,10 +191,10 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
               </motion.div>
             );
           })}
-        </RevealGroup>
+        </FadeUp>
 
         {/* Support Callout - Plain language "our team" */}
-        <RevealItem delay={0.1}>
+        <FadeUp delay={0.1}>
           <div className="p-8 sm:p-9 border border-ink-3 bg-ink-2/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 shadow-lg hover:border-lav/40 transition-colors">
             <div>
               <span className="font-editorial font-bold text-lg sm:text-xl text-paper block">
@@ -210,7 +211,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
               className="shrink-0 w-full sm:w-auto"
             />
           </div>
-        </RevealItem>
+        </FadeUp>
       </div>
     </section>
   );

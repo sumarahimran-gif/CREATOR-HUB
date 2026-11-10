@@ -1,8 +1,9 @@
 import React from 'react';
 import { Lock, Calendar, CheckCircle2 } from 'lucide-react';
 import { PrimaryCta, SecondaryCta } from './CtaButtons';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
-import { motion } from 'motion/react';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
+import { StorySlides } from './StorySlides';
 
 interface HowItWorksSectionProps {
   onOpenApply: () => void;
@@ -54,41 +55,38 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
   return (
     <section
       id="how-it-works"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-ink border-t border-ink-3"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         {/* Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-lav uppercase">
-              <span className="w-5 h-[1px] bg-lav/40 inline-block shrink-0" />
+              <span className="w-5 h-[1px] bg-lav-soft inline-block shrink-0" />
               <span>How It Works</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="From application to Creator Hub in a few straightforward steps."
             as="h2"
+            direction="right"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink-3 pl-5 py-1">
               <p className="text-sm font-tech uppercase tracking-[0.15em] text-paper-dim">
                 How joining works
               </p>
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
-        {/* 4 Sequential Columns with Unified Visual Treatment */}
-        <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10" stagger={0.08}>
-          {steps.map((item) => (
-            <motion.div
-              key={item.step}
-              variants={revealChildVariants}
-              className="border-t border-ink-3 pt-8 flex flex-col justify-between space-y-7 group hover:border-lav/50 transition-colors"
-            >
+        <StorySlides
+          aria-label="How it works steps"
+          slides={steps.map((item) => (
+            <div key={item.step} className="redesign-card flex flex-col justify-between space-y-7 group">
               <div className="space-y-4">
                 <span className="font-editorial font-bold text-3xl text-paper-dim group-hover:text-lav transition-colors block">
                   0{item.step}
@@ -144,9 +142,9 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                   />
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </RevealGroup>
+        />
       </div>
     </section>
   );

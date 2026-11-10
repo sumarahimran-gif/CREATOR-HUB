@@ -1,7 +1,9 @@
 import React from 'react';
 import { Compass, FileText, Users, RefreshCw, Network, ArrowRight } from 'lucide-react';
-import { RevealHeading, RevealItem, RevealGroup, revealChildVariants } from './ScrollReveal';
+import { FadeUp } from './FadeUp';
+import { RevealText } from './RevealText';
 import { motion } from 'motion/react';
+import { StorySlides } from './StorySlides';
 
 export const ProjectsShowcase: React.FC = () => {
   const deliverables = [
@@ -46,83 +48,98 @@ export const ProjectsShowcase: React.FC = () => {
       icon: Network,
     },
   ];
+  const deliverablePanels = [
+    deliverables.slice(0, 2),
+    deliverables.slice(2, 4),
+    deliverables.slice(4),
+  ];
 
   return (
     <section
       id="what-you-get"
-      className="relative py-20 sm:py-24 lg:py-28 px-6 sm:px-10 lg:px-16 bg-ink border-t border-ink-3 overflow-hidden"
+      className="relative py-24 lg:py-32 px-5 md:px-8 lg:px-16 bg-ink border-t border-ink-3"
     >
-      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-20">
+      <div className="mx-auto w-full max-w-7xl space-y-16 sm:space-y-20">
         
         {/* Section Header */}
         <div className="space-y-4 max-w-3xl">
-          <RevealItem>
+          <FadeUp>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-tech tracking-[0.25em] text-lav uppercase">
-              <span className="w-5 h-[1px] bg-lav/40 inline-block shrink-0" />
+              <span className="w-5 h-[1px] bg-lav-soft inline-block shrink-0" />
               <span>Member Deliverables</span>
             </div>
-          </RevealItem>
+          </FadeUp>
 
-          <RevealHeading
+          <RevealText
             text="The resources and support you need to move forward with confidence."
             as="h2"
+            direction="left"
             className="font-editorial font-bold text-2xl sm:text-3xl lg:text-4xl text-paper tracking-[-0.02em] leading-[1.15] uppercase"
           />
 
-          <RevealItem delay={0.1}>
+          <FadeUp delay={0.1}>
             <div className="border-l border-ink-3 pl-5 py-1">
               <p className="text-sm font-tech uppercase tracking-[0.15em] text-paper-dim">
                 Comprehensive member infrastructure for systemic channel execution
               </p>
             </div>
-          </RevealItem>
+          </FadeUp>
         </div>
 
-        {/* Deliverables Grid: 6-column grid with 3 top items (span 2) and 2 bottom items (span 3) - Centered with no grid hole! */}
-        <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8" stagger={0.08}>
-          {deliverables.map((item, idx) => {
-            const Icon = item.icon;
-            const isBottomRow = idx >= 3;
-            return (
-              <motion.div
-                key={item.num}
-                variants={revealChildVariants}
-                className={`p-8 sm:p-9 border border-ink-3 bg-ink-2/60 flex flex-col justify-between hover:border-lav/50 transition-colors duration-200 group ${
-                  isBottomRow ? 'lg:col-span-3' : 'lg:col-span-2'
-                }`}
-              >
-                <div className="space-y-6">
-                  {/* Top Metadata Bar */}
-                  <div className="flex items-center justify-between border-b border-ink-3 pb-3.5">
-                    <span className="font-editorial font-bold text-2xl text-paper-dim group-hover:text-lav transition-colors">
-                      {item.num}
-                    </span>
-                    <div className="w-8 h-8 border border-ink-3 bg-ink flex items-center justify-center group-hover:border-lav/50 transition-all">
-                      <Icon className="w-4 h-4 text-lav" />
+        {/* Deliverables Grid */}
+        <StorySlides
+          aria-label="Member deliverables"
+          slides={deliverablePanels.map((panel, panelIndex) => (
+            <FadeUp
+              key={panelIndex}
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
+              stagger={0.1}
+            >
+              {panel.map((item, panelItemIndex) => {
+                const Icon = item.icon;
+                const idx = panelIndex * 2 + panelItemIndex;
+                return (
+                  <motion.div
+                    key={item.num}
+                    className={`redesign-card bg-ink-2/60 flex flex-col justify-between group ${
+                      deliverables.length % 2 === 1 && idx === deliverables.length - 1
+                        ? 'md:col-span-2'
+                        : ''
+                    }`}
+                  >
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between border-b border-ink-3 pb-3.5">
+                        <span className="font-editorial font-bold text-2xl text-paper-dim group-hover:text-lav transition-colors">
+                          {item.num}
+                        </span>
+                        <div className="w-8 h-8 border border-ink-3 bg-ink flex items-center justify-center group-hover:border-lav/50 transition-all">
+                          <Icon className="w-4 h-4 text-lav" />
+                        </div>
+                      </div>
+
+                      <span className="text-xs sm:text-sm font-tech text-lav uppercase tracking-widest block">
+                        {item.category}
+                      </span>
+
+                      <h3 className="font-editorial font-semibold text-lg sm:text-xl text-paper tracking-[-0.02em] group-hover:text-lav-soft transition-colors">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-base text-paper-dim font-sans leading-relaxed">
+                        {item.description}
+                      </p>
                     </div>
-                  </div>
 
-                  <span className="text-xs sm:text-sm font-tech text-lav uppercase tracking-widest block">
-                    {item.category}
-                  </span>
-
-                  <h3 className="font-editorial font-semibold text-lg sm:text-xl text-paper tracking-[-0.02em] group-hover:text-lav-soft transition-colors">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-base text-paper-dim font-sans leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="pt-6 mt-7 border-t border-ink-3 flex items-center justify-between text-xs font-tech text-paper-dim uppercase tracking-wider">
-                  <span>Deliverable // 0{idx + 1}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-paper-dim group-hover:text-lav transition-colors" />
-                </div>
-              </motion.div>
-            );
-          })}
-        </RevealGroup>
+                    <div className="pt-6 mt-7 border-t border-ink-3 flex items-center justify-between text-xs font-tech text-paper-dim uppercase tracking-wider">
+                      <span>Deliverable // 0{idx + 1}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-paper-dim group-hover:text-lav transition-colors" />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </FadeUp>
+          ))}
+        />
 
       </div>
     </section>
